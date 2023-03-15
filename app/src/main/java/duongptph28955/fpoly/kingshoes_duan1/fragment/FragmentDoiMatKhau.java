@@ -27,11 +27,11 @@ public class FragmentDoiMatKhau extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         dao = new ThanhVienDAO(getActivity());
-        ed_NewPass = view.findViewById(R.id.edNewPass);
-        ed_OldPass = view.findViewById(R.id.edOldPass);
-        ed_RePass = view.findViewById(R.id.edRenewPass);
-        btn_Cancel = view.findViewById(R.id.btnCancelRePass);
-        btn_Save = view.findViewById(R.id.btnSaveRePass);
+        ed_NewPass = view.findViewById(R.id.fmChangePass_edPassNew);
+        ed_OldPass = view.findViewById(R.id.fmChangePass_edPassOld);
+        ed_RePass = view.findViewById(R.id.fmChangePass_edRePass);
+        btn_Cancel = view.findViewById(R.id.fmChangePass_btnCancel);
+        btn_Save = view.findViewById(R.id.fmChangePass_btnSave);
         btn_Cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
