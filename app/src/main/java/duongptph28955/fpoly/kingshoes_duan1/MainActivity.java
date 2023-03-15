@@ -15,6 +15,7 @@ import android.view.MenuItem;
 
 import com.google.android.material.navigation.NavigationView;
 
+import duongptph28955.fpoly.kingshoes_duan1.fragment.FragmentDoiMatKhau;
 import duongptph28955.fpoly.kingshoes_duan1.fragment.fragmentLoaiGiay;
 import duongptph28955.fpoly.kingshoes_duan1.fragment.themTaiKhoan_Fragment;
 
@@ -22,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
     NavigationView nav;
     Toolbar toolbar;
     DrawerLayout drawerLayout;
+    String userName = "";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
                         fragment = new themTaiKhoan_Fragment();
                         break;
                     case R.id.action_doiPass:
-
+                        fragment = new FragmentDoiMatKhau();
                         break;
                     case R.id.action_dangXuat:
 
@@ -92,5 +94,8 @@ public class MainActivity extends AppCompatActivity {
             drawerLayout.openDrawer(GravityCompat.START);
         }
         return super.onOptionsItemSelected(item);
+    }
+    public String getUserName() {
+        return userName;
     }
 }
