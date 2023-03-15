@@ -49,9 +49,11 @@
         android:layout_width="match_parent"
         android:layout_marginTop="10dp"
         android:layout_height="wrap_content"
+        app:passwordToggleEnabled="true"
         android:hint="Mật khẩu">
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
+            android:inputType="textPassword"
             android:layout_height="wrap_content" />
     </com.google.android.material.textfield.TextInputLayout>
 
