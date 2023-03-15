@@ -56,6 +56,7 @@ public class fragmentLoaiGiay extends Fragment {
         LoaiGiayAdapter adapter = new LoaiGiayAdapter(list, getContext(), loaiGiayDAO);
 
         recyclerLoaiGiay.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
     }
 
     private void showDialog(){
@@ -74,7 +75,6 @@ public class fragmentLoaiGiay extends Fragment {
                 boolean check = loaiGiayDAO.themLoaiGiay(tenloai);
                 if (check){
                     Toast.makeText(getContext(), "Thêm mới loại giầy thành công", Toast.LENGTH_SHORT).show();
-                    loadData();
                 }else {
                     Toast.makeText(getContext(), "Thêm thất bại", Toast.LENGTH_SHORT).show();
                 }
