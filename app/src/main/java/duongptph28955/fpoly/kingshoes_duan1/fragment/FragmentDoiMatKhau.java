@@ -1,5 +1,7 @@
 package duongptph28955.fpoly.kingshoes_duan1.fragment;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,88 +10,82 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import duongptph28955.fpoly.kingshoes_duan1.DAO.ThanhVienDAO;
-import duongptph28955.fpoly.kingshoes_duan1.DAO.ThuThuDAO;
 import duongptph28955.fpoly.kingshoes_duan1.MainActivity;
 import duongptph28955.fpoly.kingshoes_duan1.R;
 import duongptph28955.fpoly.kingshoes_duan1.dto.ThanhVien;
 
 public class FragmentDoiMatKhau extends Fragment {
-    MainActivity mMainActivity;
-    EditText edOldPass, edNewPass, edRePass;
-    Button btnSave, btnCancel;
-    ThuThuDAO dao;
-
+    ThanhVienDAO dao;
+    EditText ed_OldPass, ed_NewPass, ed_RePass;
+    Button btn_Cancel, btn_Save;
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_change_pass, container, false);
-        edOldPass = view.findViewById(R.id.fmChangePass_edPassOld);
-        edNewPass = view.findViewById(R.id.fmChangePass_edPassNew);
-        edRePass = view.findViewById(R.id.fmChangePass_edRePass);
-        btnSave = view.findViewById(R.id.fmChangePass_btnSave);
-        btnCancel = view.findViewById(R.id.fmChangePass_btnCancel);
-
-        mMainActivity = (MainActivity) getActivity();
-
-        dao = new ThuThuDAO(getActivity());
-
-        btnCancel.setOnClickListener(v -> {
-            edOldPass.setText("");
-            edNewPass.setText("");
-            edRePass.setText("");
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        dao = new ThanhVienDAO(getActivity());
+        ed_NewPass = view.findViewById(R.id.edNewPass);
+        ed_OldPass = view.findViewById(R.id.edOldPass);
+        ed_RePass = view.findViewById(R.id.edRenewPass);
+        btn_Cancel = view.findViewById(R.id.btnCancelRePass);
+        btn_Save = view.findViewById(R.id.btnSaveRePass);
+        btn_Cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ed_OldPass.setText("");
+                ed_NewPass.setText("");
+                ed_RePass.setText("");
+            }
         });
-
-        btnSave.setOnClickListener(v -> {
-            //Lấy id từ MainActivty
-            String id = mMainActivity.getUserName();
-            if (Validate() > 0) {
-                ThanhVien thanhVien = dao.getID(id);
-                thanhVien.setMatKhau(edNewPass.getText().toString().trim());
-                if (dao.updatePass(thanhVien) > 0) {
-                    Toast.makeText(getActivity(), "Thay đổi mật khẩu thành công", Toast.LENGTH_SHORT).show();
-                    edOldPass.setText("");
-                    edNewPass.setText("");
-                    edRePass.setText("");
-                } else {
-                    Toast.makeText(getActivity(), "Thay đổi mật khẩu thất bại", Toast.LENGTH_SHORT).show();
+        btn_Save.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences pref = getActivity().getSharedPreferences("GHINHO_FILE", Context.MODE_PRIVATE);
+                String user = pref.getString("TAIKHOAN", "");
+                if (validate()>0){
+                    ThanhVien thuThu = dao.getID(user);
+                    thuThu.matKhau = ed_NewPass.getText().toString();
+                    dao.updateThanhVien(thuThu);
+                    if (dao.updatePass(thuThu)>0){
+                        Toast.makeText(getContext(), "Thay đổi mật khẩu thành công", Toast.LENGTH_SHORT).show();
+                        ed_OldPass.setText("");
+                        ed_RePass.setText("");
+                        ed_NewPass.setText("");
+                    } else {
+                        Toast.makeText(getContext(), "Thay đổi mật khẩu không thành công", Toast.LENGTH_SHORT).show();
+                    }
                 }
+
             }
         });
-        return view;
     }
-
-    public int Validate() {
+    public int validate(){
         int check = 1;
-        if (edOldPass.getText().length() == 0 || edNewPass.getText().length() == 0 || edRePass.getText().length() == 0) {
-            Toast.makeText(getActivity(), "Bạn phải nhập đầy đủ thông tin", Toast.LENGTH_SHORT).show();
-            check = 0;
+        if (ed_OldPass.getText().length() == 0 || ed_NewPass.getText().length() == 0|| ed_RePass.getText().length() == 0){
+            Toast.makeText(getContext(), "Bạn phải nhập đầy đủ thông tin", Toast.LENGTH_SHORT).show();
+            check = -1;
         } else {
-            //Lấy mật khẩu cũ
-            String id = mMainActivity.getUserName();
-            ThanhVien thuThu = dao.getID(id);
-            String passOld = thuThu.getMatKhau();
-
-            String passNew = edNewPass.getText().toString();
-            String rePass = edRePass.getText().toString();
-
-            if (!passOld.equals(edOldPass.getText().toString())) {
+            SharedPreferences pref = getActivity().getSharedPreferences("GHINHO_FILE", Context.MODE_PRIVATE);
+            String passOld = pref.getString("MATKHAU", "");
+            String pass = ed_NewPass.getText().toString();
+            String RePass = ed_RePass.getText().toString();
+            if (!passOld.equals(ed_OldPass.getText().toString())){
                 Toast.makeText(getActivity(), "Mật khẩu cũ sai", Toast.LENGTH_SHORT).show();
-                check = 0;
+                check = -1;
             }
-            if (!passNew.equals(rePass)) {
-                Toast.makeText(getActivity(), "Nhập lại mật khẩu không trùng khớp", Toast.LENGTH_SHORT).show();
-                check = 0;
+            if (!pass.equals(RePass)){
+                Toast.makeText(getActivity(), "Mật khẩu mới không trùng khớp", Toast.LENGTH_SHORT).show();
             }
         }
         return check;
+    }
+
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.doimatkhau_fragment, container, false);
     }
 }

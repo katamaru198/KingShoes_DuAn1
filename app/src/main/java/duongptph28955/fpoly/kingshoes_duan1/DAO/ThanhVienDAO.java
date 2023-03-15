@@ -29,7 +29,25 @@ public class ThanhVienDAO {
         values.put("soDienThoaiTV", obj.getSoDT());
         return db.insert("THANHVIEN", null, values);
     }
+    public int updateThanhVien(ThanhVien obj){
+        ContentValues values = new ContentValues();
+        values.put("maThanhVien", obj.getMaTV());
+        values.put("tenThanhVien", obj.getTenTV());
+        values.put("matKhau", obj.getMatKhau());
+        values.put("soDienThoaiTV", obj.getSoDT());
+        return db.update("THANHVIEN",values,"maThanhVien=?", new String[]{obj.getMaTV()+""});
+    }
+    public ThanhVien getID(String id) {
+        String sql = "SELECT * FROM THANHVIEN WHERE maThanhVien=?";
+        List<ThanhVien> list = getData(sql, id);
+        return list.get(0);
+    }
+    public int updatePass(ThanhVien obj) {
+        ContentValues values = new ContentValues();
+        values.put("matKhau", obj.getMatKhau());
 
+        return db.update("THANHVIEN", values, "maThanhVien=?", new String[]{obj.getMaTV()});
+    }
     public int checkLogin(String ma ,String matkhau){
         String  sql ="SELECT *FROM THANHVIEN WHERE maThanhVien =? AND matKhau=?";
         List<ThanhVien> list =getData(sql,ma,matkhau);
