@@ -35,6 +35,12 @@ public class MainActivity extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setHomeAsUpIndicator(R.drawable.ic_menu);
         actionBar.setDisplayHomeAsUpEnabled(true);
+        Intent intent = getIntent();
+        String tenDangNhap = intent.getStringExtra("TAIKHOAN");
+        if (tenDangNhap.equalsIgnoreCase("admin")){
+            nav.getMenu().findItem(R.id.action_themTaiKhoan).setVisible(true);
+        }
+
         nav.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             FragmentManager fragmentManager = getSupportFragmentManager();
             Fragment fragment;
@@ -73,7 +79,8 @@ public class MainActivity extends AppCompatActivity {
                         fragment = new FragmentDoiMatKhau();
                         break;
                     case R.id.action_dangXuat:
-
+                        Intent intent1 = new Intent(MainActivity.this, DangNhapActivity.class);
+                        startActivity(intent1);
                         break;
                     default:
                         break;
