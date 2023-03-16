@@ -65,7 +65,7 @@ public class DangNhapActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(),"login thành công",Toast.LENGTH_SHORT).show();
                 remember(User,matkhau,chkLuu.isChecked());
                 Intent intent = new Intent(getApplicationContext(),MainActivity.class);
-                intent.putExtra("user",User);
+                intent.putExtra("TAIKHOAN",User);
                 startActivity(intent);
                 finish();
             }else{

@@ -25,9 +25,8 @@
         <menu>
             <item android:id="@+id/action_themTaiKhoan"
                 android:title="Thêm tài khoản"
+                android:visible="false"
                 />
-
-
             <item android:id="@+id/action_doiPass"
                 android:title="Đổi mật khẩu"/>
             <item android:id="@+id/action_dangXuat"
