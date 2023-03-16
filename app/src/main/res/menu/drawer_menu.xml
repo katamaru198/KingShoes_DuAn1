@@ -16,7 +16,7 @@
     <item android:title="Thống kê">
         <menu>
             <item android:id="@+id/action_top10"
-                android:title="Top 10 sách mượn nhiều nhất"/>
+                android:title="Top 10 giày mua nhiều nhất"/>
             <item android:id="@+id/action_doanhThu"
                 android:title="Doanh thu"/>
         </menu>
