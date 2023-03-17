@@ -53,23 +53,23 @@ public class DangNhapActivity extends AppCompatActivity {
         String User = edTaiKhoan.getEditText().getText().toString().trim();
         String matkhau = edMatKhau.getEditText().getText().toString().trim();
         if (User.isEmpty() ){
-            edTaiKhoan.setError("tài khoản không được trống");
+            edTaiKhoan.setError("Tài khoản không được trống");
             edMatKhau.setError(null);
         }else if(matkhau.isEmpty()){
             edTaiKhoan.setError(null);
-            edMatKhau.setError("mật khẩu không được trống");
+            edMatKhau.setError("Mật khẩu không được trống");
         }else{
             edTaiKhoan.setError(null);
             edMatKhau.setError(null);
             if (dao.checkLogin(User,matkhau)>0){
-                Toast.makeText(getApplicationContext(),"login thành công",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(),"Login thành công",Toast.LENGTH_SHORT).show();
                 remember(User,matkhau,chkLuu.isChecked());
                 Intent intent = new Intent(getApplicationContext(),MainActivity.class);
                 intent.putExtra("TAIKHOAN",User);
                 startActivity(intent);
                 finish();
             }else{
-                Toast.makeText(getApplicationContext(),"tài khoản va mật khẩu không đúng ",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(),"Tài khoản và mật khẩu không đúng ",Toast.LENGTH_SHORT).show();
             }
         }
     }
