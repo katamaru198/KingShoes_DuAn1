@@ -1,35 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:id="@+id/action_LoaiGiay"
+    <item
+        android:id="@+id/action_LoaiGiay"
+        android:icon="@drawable/ic_category_24"
         android:title="Quản lý loại giày"/>
-    <item android:id="@+id/action_mauSac"
-        android:title="Quản lý màu sắc"/>
-    <item android:id="@+id/action_size"
-    android:title="Quản lý size"/>
-    <item android:id="@+id/action_Giay"
+    <item
+        android:id="@+id/action_Giay"
+        android:icon="@drawable/ic_shoe"
         android:title="Quản lý giày"/>
-    <item android:id="@+id/action_khachHang"
+    <item
+        android:id="@+id/action_mauSac"
+        android:icon="@drawable/baseline_color_lens_24"
+        android:title="Quản lý màu sắc"/>
+    <item
+        android:id="@+id/action_size"
+        android:icon="@drawable/ic_size"
+        android:title="Quản lý size"/>
+    <item
+        android:id="@+id/action_khachHang"
+        android:icon="@drawable/ic_khachhang"
         android:title="Quản lý khách hàng"/>
-    <item android:id="@+id/action_HoaDon"
+    <item
+        android:id="@+id/action_HoaDon"
+        android:icon="@drawable/ic_hoadon"
         android:title="Quản lý hóa đơn" />
 
     <item android:title="Thống kê">
         <menu>
-            <item android:id="@+id/action_top10"
+            <item
+                android:id="@+id/action_top10"
+                android:icon="@drawable/ic_top_10"
                 android:title="Top 10 giày mua nhiều nhất"/>
-            <item android:id="@+id/action_doanhThu"
+            <item
+                android:id="@+id/action_doanhThu"
+                android:icon="@drawable/ic_money_24"
                 android:title="Doanh thu"/>
         </menu>
     </item>
     <item android:title="Người dùng">
         <menu>
-            <item android:id="@+id/action_themTaiKhoan"
+            <item
+                android:id="@+id/action_themTaiKhoan"
                 android:title="Thêm tài khoản"
+                android:icon="@drawable/ic_themthanhvien"
                 android:visible="false"
                 />
-            <item android:id="@+id/action_doiPass"
+            <item
+                android:id="@+id/action_doiPass"
+                android:icon="@drawable/ic_doimatkhau"
                 android:title="Đổi mật khẩu"/>
-            <item android:id="@+id/action_dangXuat"
+            <item
+                android:id="@+id/action_dangXuat"
+                android:icon="@drawable/ic_dangxuat"
                 android:title="Đăng xuất"/>
         </menu>
     </item>
