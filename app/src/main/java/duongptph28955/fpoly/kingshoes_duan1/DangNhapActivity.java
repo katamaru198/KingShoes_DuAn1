@@ -38,7 +38,6 @@ public class DangNhapActivity extends AppCompatActivity {
         edMatKhau.getEditText().setText(pref.getString("MATKHAU",""));
         chkLuu.setChecked(pref.getBoolean("NHO",false));
 
-
         btnDangNhap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -81,13 +80,10 @@ public class DangNhapActivity extends AppCompatActivity {
 
         if (!status){
             edit.clear();
-
         }else {
-
             edit.putString("TAIKHOAN",u);
             edit.putString("MATKHAU",m);
             edit.putBoolean("NHO",status);
-
         }
         edit.commit();
 

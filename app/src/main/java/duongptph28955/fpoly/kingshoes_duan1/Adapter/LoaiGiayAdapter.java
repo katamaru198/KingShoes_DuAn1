@@ -53,6 +53,20 @@ public class LoaiGiayAdapter extends RecyclerView.Adapter<LoaiGiayAdapter.ViewHo
                 showDialogCapNhatLoai(list.get(holder.getAdapterPosition()));
             }
         });
+        holder.imgDel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int check = loaiGiayDAO.xoaLoaiGiay(list.get(holder.getAdapterPosition()).getMaLoai());
+                if (check == 1){
+                    Toast.makeText(context, "Xóa loại giày thành công", Toast.LENGTH_SHORT).show();
+                    loadData();
+                }else if (check == 0){
+                    Toast.makeText(context, "Xóa thất bại", Toast.LENGTH_SHORT).show();
+                }else if (check == -1){
+                    Toast.makeText(context, "LOẠI GIẦY tồn tại trong SẢN PHẨM, không được phép xóa", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
 
     }
 
