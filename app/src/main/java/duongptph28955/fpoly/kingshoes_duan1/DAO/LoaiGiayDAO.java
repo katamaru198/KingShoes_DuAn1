@@ -53,17 +53,17 @@ public class LoaiGiayDAO {
 
     //Xoa loại giầy
     //1:xóa thành công, 0:xóa thất bại, -1:có giầy tồn tại trong loại giầy
-//    public int xoaLoaiGiay(int id){
-//        SQLiteDatabase sqLiteDatabase = dbHelper.getWritableDatabase();
-//
-//        Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM SANPHAM WHERE maLoai = ?", new String[]{String.valueOf(id)});
-//        if (cursor.getCount() !=0){
-//            return -1;
-//        }
-//        long check = sqLiteDatabase.delete("LOAIGIAY", "maLoai = ?", new String[]{String.valueOf(id)});
-//        if (check == -1){
-//            return 0;
-//        }
-//        return 1;
-//    }
+    public int xoaLoaiGiay(int maloai){
+        SQLiteDatabase sqLiteDatabase = dbHelper.getWritableDatabase();
+
+        Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM SANPHAM WHERE maLoai = ?", new String[]{String.valueOf(maloai)});
+        if (cursor.getCount() !=0){
+            return -1;
+        }
+        long check = sqLiteDatabase.delete("LOAIGIAY", "maLoai = ?", new String[]{String.valueOf(maloai)});
+        if (check == -1){
+            return 0;
+        }
+        return 1;
+    }
 }

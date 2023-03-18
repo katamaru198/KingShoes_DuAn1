@@ -2,17 +2,26 @@ package duongptph28955.fpoly.kingshoes_duan1.dto;
 
 public class SanPham {
     public int maSP;
-    public String maLoai;
+    public int maLoai;
+    private String tenLoai;
     public String tenSP;
-    public int giaNhap ;
-    public int soLuong;
-    public String ngayNhap;
-    public String hinhAnh;
+    private int giaNhap ;
+    private int soLuong;
+    private String ngayNhap;
+    private byte[] hinhAnh;
 
-    public SanPham() {
+    public SanPham(int maSP, int maLoai, String tenLoai, String tenSP, int giaNhap, int soLuong, String ngayNhap, byte[] hinhAnh) {
+        this.maSP = maSP;
+        this.maLoai = maLoai;
+        this.tenLoai = tenLoai;
+        this.tenSP = tenSP;
+        this.giaNhap = giaNhap;
+        this.soLuong = soLuong;
+        this.ngayNhap = ngayNhap;
+        this.hinhAnh = hinhAnh;
     }
 
-    public SanPham(int maSP, String maLoai, String tenSP, int giaNhap, int soLuong, String ngayNhap, String hinhAnh) {
+    public SanPham(int maSP, int maLoai, String tenSP, int giaNhap, int soLuong, String ngayNhap, byte[] hinhAnh) {
         this.maSP = maSP;
         this.maLoai = maLoai;
         this.tenSP = tenSP;
@@ -22,6 +31,7 @@ public class SanPham {
         this.hinhAnh = hinhAnh;
     }
 
+
     public int getMaSP() {
         return maSP;
     }
@@ -30,12 +40,20 @@ public class SanPham {
         this.maSP = maSP;
     }
 
-    public String getMaLoai() {
+    public int getMaLoai() {
         return maLoai;
     }
 
-    public void setMaLoai(String maLoai) {
+    public void setMaLoai(int maLoai) {
         this.maLoai = maLoai;
+    }
+
+    public String getTenLoai() {
+        return tenLoai;
+    }
+
+    public void setTenLoai(String tenLoai) {
+        this.tenLoai = tenLoai;
     }
 
     public String getTenSP() {
@@ -70,11 +88,11 @@ public class SanPham {
         this.ngayNhap = ngayNhap;
     }
 
-    public String getHinhAnh() {
+    public byte[] getHinhAnh() {
         return hinhAnh;
     }
 
-    public void setHinhAnh(String hinhAnh) {
+    public void setHinhAnh(byte[] hinhAnh) {
         this.hinhAnh = hinhAnh;
     }
 }
