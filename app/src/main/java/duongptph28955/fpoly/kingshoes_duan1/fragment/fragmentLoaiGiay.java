@@ -27,6 +27,7 @@ import duongptph28955.fpoly.kingshoes_duan1.dto.LoaiGiay;
 public class fragmentLoaiGiay extends Fragment {
     RecyclerView recyclerLoaiGiay;
     LoaiGiayDAO loaiGiayDAO;
+    TextInputLayout edtTenLoai;
 
     @Nullable
     @Override
@@ -58,26 +59,31 @@ public class fragmentLoaiGiay extends Fragment {
         recyclerLoaiGiay.setAdapter(adapter);
     }
 
-    private void showDialog(){
+    protected void showDialog(){
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         LayoutInflater inflater = getLayoutInflater();
         View view = inflater.inflate(R.layout.dialog_themloaigiay, null);
         builder.setView(view);
 
-        TextInputLayout edtTenLoai = view.findViewById(R.id.edtTenLoai);
+        edtTenLoai = view.findViewById(R.id.edtTenLoai);
 
         builder.setNegativeButton("Thêm", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 String tenloai = edtTenLoai.getEditText().getText().toString();
 
-                boolean check = loaiGiayDAO.themLoaiGiay(tenloai);
-                if (check){
-                    Toast.makeText(getContext(), "Thêm mới loại giầy thành công", Toast.LENGTH_SHORT).show();
-                    loadData();
-                }else {
-                    Toast.makeText(getContext(), "Thêm thất bại", Toast.LENGTH_SHORT).show();
+
+
+                if (validate()>0){
+                    boolean check = loaiGiayDAO.themLoaiGiay(tenloai);
+                    if (check){
+                        Toast.makeText(getContext(), "Thêm mới loại giầy thành công", Toast.LENGTH_SHORT).show();
+                        loadData();
+                    }else {
+                        Toast.makeText(getContext(), "Thêm thất bại", Toast.LENGTH_SHORT).show();
+                    }
                 }
+
             }
         });
 
@@ -88,6 +94,32 @@ public class fragmentLoaiGiay extends Fragment {
         });
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
+
+
+
     }
+    public int validate(){
+        int check =1;
+        String layoutinput = edtTenLoai.getEditText().getText().toString().trim();
+        if (layoutinput.isEmpty()){
+//            edtTenLoai.setError("không được để trống");
+            Toast.makeText(getContext(),"không được để trống ",Toast.LENGTH_SHORT).show();
+            check =-1;
+        }
+
+
+        try {
+               edtTenLoai.getEditText().getText().toString().trim();
+
+        }catch (Exception e){
+            e.printStackTrace();
+                Toast.makeText(getContext(),"không được nhập số",Toast.LENGTH_SHORT).show();
+                 check =-1;
+        }
+
+        return check;
+
+    }
+
 
 }
