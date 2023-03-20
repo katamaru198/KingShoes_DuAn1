@@ -71,9 +71,6 @@ public class fragmentLoaiGiay extends Fragment {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 String tenloai = edtTenLoai.getEditText().getText().toString();
-
-
-
                 if (validate()>0){
                     boolean check = loaiGiayDAO.themLoaiGiay(tenloai);
                     if (check){

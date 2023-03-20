@@ -1,5 +1,6 @@
 package duongptph28955.fpoly.kingshoes_duan1.DAO;
 
+import android.annotation.SuppressLint;
 import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Context;
@@ -7,6 +8,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import duongptph28955.fpoly.kingshoes_duan1.DBHelper.DBHelper;
 import duongptph28955.fpoly.kingshoes_duan1.dto.SanPham;
@@ -61,6 +63,39 @@ public class SanPhamDAO {
         return true;
     }
 
+    @SuppressLint("Range")
+    private List< SanPham> getData(String sql, String...selectionArgs){
+        List<SanPham> list = new ArrayList<>();
+        SQLiteDatabase database = dbHelper.getReadableDatabase();
+        Cursor c = database.rawQuery(sql, selectionArgs);
+        while (c.moveToNext() ){
+            SanPham obj = new SanPham();
+            obj.maSP = Integer.parseInt(c.getString( c.getColumnIndex("maSanPham")));
+            obj.tenSP = c.getString( c.getColumnIndex("tenSanPham"));
+            list.add(obj);
+        }
+        return list;
+    }
+
+
+    public SanPham getID(String id){
+        String sql = "select * from SANPHAM where maSanPham=?";
+        List<SanPham> list = getData(sql, id);
+        return list.get(0);
+    }
+//    @SuppressLint("Range")
+//    public SanPham getId(String...id){
+//        String sql = "select * from SANPHAM where maSanPham = ?";
+//        List<SanPham>  list = new ArrayList<>();
+//        Cursor c = dbHelper.getWritableDatabase().rawQuery(sql,id);
+//        while (c.moveToNext()){
+//            SanPham obj = new SanPham();
+//            obj.maSP = Integer.parseInt(c.getString(c.getColumnIndex("maSP")));
+//            obj.tenSP = c.getString(c.getColumnIndex("tenSP"));
+//            list.add(obj);
+//        }
+//        return list.get(0);
+//    }
     // boolean true: xóa thành công; false: thất bại
     //int 1: xóa thành công ; 0: thất bại ; -1: tìm thấy sản phẩm có trong hóa đơn
 //    public int xoaSanPham(int masp){

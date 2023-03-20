@@ -10,6 +10,9 @@ public class SanPham {
     private String ngayNhap;
     private byte[] hinhAnh;
 
+    public SanPham() {
+    }
+
     public SanPham(int maSP, int maLoai, String tenLoai, String tenSP, int giaNhap, int soLuong, String ngayNhap, byte[] hinhAnh) {
         this.maSP = maSP;
         this.maLoai = maLoai;
