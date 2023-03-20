@@ -10,6 +10,7 @@ import android.app.Dialog;
 import android.content.ContentResolver;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
@@ -31,6 +32,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -151,7 +153,7 @@ public class fragmentSanPham extends Fragment {
             public void onClick(View view) {
 //                ActivityCompat.requestPermissions(
 //                        (Activity) getContext(),
-//                        new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+//                        new String[]{android.Manifest.permission.READ_EXTERNAL_STORAGE},
 //                        REQUEST_CODE_FOLDER
 //                );
                     Intent intent = new Intent(Intent.ACTION_PICK);
