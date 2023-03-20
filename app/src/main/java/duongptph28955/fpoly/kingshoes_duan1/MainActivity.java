@@ -18,6 +18,7 @@ import com.google.android.material.navigation.NavigationView;
 import duongptph28955.fpoly.kingshoes_duan1.fragment.FragmentDoiMatKhau;
 import duongptph28955.fpoly.kingshoes_duan1.fragment.fragmentLoaiGiay;
 import duongptph28955.fpoly.kingshoes_duan1.fragment.fragmentSanPham;
+import duongptph28955.fpoly.kingshoes_duan1.fragment.fragmentSizeGiay;
 import duongptph28955.fpoly.kingshoes_duan1.fragment.themTaiKhoan_Fragment;
 
 public class MainActivity extends AppCompatActivity {
@@ -59,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
 
                         break;
                     case R.id.action_size:
-
+                        fragment = new fragmentSizeGiay();
                         break;
                     case R.id.action_khachHang:
 
