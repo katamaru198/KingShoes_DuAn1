@@ -64,6 +64,7 @@ public class fragmentLoaiGiay extends Fragment {
         LayoutInflater inflater = getLayoutInflater();
         View view = inflater.inflate(R.layout.dialog_themloaigiay, null);
         builder.setView(view);
+        builder.setCancelable(false);
 
         edtTenLoai = view.findViewById(R.id.edtTenLoai);
 
@@ -71,8 +72,6 @@ public class fragmentLoaiGiay extends Fragment {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 String tenloai = edtTenLoai.getEditText().getText().toString();
-
-
 
                 if (validate()>0){
                     boolean check = loaiGiayDAO.themLoaiGiay(tenloai);
@@ -90,6 +89,7 @@ public class fragmentLoaiGiay extends Fragment {
         builder.setPositiveButton("Hủy", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.cancel();
             }
         });
         AlertDialog alertDialog = builder.create();
@@ -106,17 +106,6 @@ public class fragmentLoaiGiay extends Fragment {
             Toast.makeText(getContext(),"không được để trống ",Toast.LENGTH_SHORT).show();
             check =-1;
         }
-
-
-        try {
-               edtTenLoai.getEditText().getText().toString().trim();
-
-        }catch (Exception e){
-            e.printStackTrace();
-                Toast.makeText(getContext(),"không được nhập số",Toast.LENGTH_SHORT).show();
-                 check =-1;
-        }
-
         return check;
 
     }
