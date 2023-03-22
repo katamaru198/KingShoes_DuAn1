@@ -1,5 +1,6 @@
 package duongptph28955.fpoly.kingshoes_duan1.Adapter;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -43,7 +44,7 @@ public class LoaiGiayAdapter extends RecyclerView.Adapter<LoaiGiayAdapter.ViewHo
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, @SuppressLint("RecyclerView") int position) {
         holder.txtMaLoai.setText("Mã loại giầy: " + list.get(position).getMaLoai());
         holder.txtTenLoai.setText("Tên loại giầy: "+ list.get(position).getTenLoai());
 
@@ -56,18 +57,31 @@ public class LoaiGiayAdapter extends RecyclerView.Adapter<LoaiGiayAdapter.ViewHo
         holder.imgDel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                int check = loaiGiayDAO.xoaLoaiGiay(list.get(holder.getAdapterPosition()).getMaLoai());
-                if (check == 1){
-                    Toast.makeText(context, "Xóa loại giày thành công", Toast.LENGTH_SHORT).show();
-                    loadData();
-                }else if (check == 0){
-                    Toast.makeText(context, "Xóa thất bại", Toast.LENGTH_SHORT).show();
-                }else if (check == -1){
-                    Toast.makeText(context, "LOẠI GIẦY tồn tại trong SẢN PHẨM, không được phép xóa", Toast.LENGTH_SHORT).show();
-                }
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                builder.setTitle("Xóa "+ list.get(position).getTenLoai());
+                builder.setMessage("Bạn có chắc chắn muốn xóa không?");
+                builder.setNegativeButton("Đồng ý", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        int check = loaiGiayDAO.xoaLoaiGiay(list.get(holder.getAdapterPosition()).getMaLoai());
+                        if (check == 1){
+                            Toast.makeText(context, "Xóa loại giày thành công", Toast.LENGTH_SHORT).show();
+                            loadData();
+                        }else if (check == 0){
+                            Toast.makeText(context, "Xóa thất bại", Toast.LENGTH_SHORT).show();
+                        }else if (check == -1){
+                            Toast.makeText(context, "LOẠI GIẦY tồn tại trong SẢN PHẨM, không được phép xóa", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+                builder.setPositiveButton("Hủy", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                    }
+                });
+                builder.create().show();
             }
         });
-
     }
 
     @Override
@@ -130,5 +144,4 @@ public class LoaiGiayAdapter extends RecyclerView.Adapter<LoaiGiayAdapter.ViewHo
         list = loaiGiayDAO.getDSLoaiGiay();
         notifyDataSetChanged();
     }
-
 }
