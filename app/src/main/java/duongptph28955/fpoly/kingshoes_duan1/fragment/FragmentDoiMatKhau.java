@@ -1,6 +1,7 @@
 package duongptph28955.fpoly.kingshoes_duan1.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -15,6 +16,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import duongptph28955.fpoly.kingshoes_duan1.DAO.ThanhVienDAO;
+import duongptph28955.fpoly.kingshoes_duan1.DangNhapActivity;
 import duongptph28955.fpoly.kingshoes_duan1.MainActivity;
 import duongptph28955.fpoly.kingshoes_duan1.R;
 import duongptph28955.fpoly.kingshoes_duan1.dto.ThanhVien;
@@ -54,10 +56,13 @@ public class FragmentDoiMatKhau extends Fragment {
                         ed_OldPass.setText("");
                         ed_RePass.setText("");
                         ed_NewPass.setText("");
+                        Intent intent = new Intent(getActivity(), DangNhapActivity.class);
+                        startActivity(intent);
                     } else {
                         Toast.makeText(getContext(), "Thay đổi mật khẩu không thành công", Toast.LENGTH_SHORT).show();
                     }
                 }
+
 
             }
         });

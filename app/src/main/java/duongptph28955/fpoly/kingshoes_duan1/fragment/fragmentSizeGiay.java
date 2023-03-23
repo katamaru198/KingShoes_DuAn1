@@ -129,10 +129,12 @@ public class fragmentSizeGiay extends Fragment {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 item = new Size();
+                item.soLuong = Integer.parseInt(edsoLuong.getEditText().getText().toString());
                 item.size = edSize.getEditText().getText().toString();
                 item.maSP = maSP;
-                item.soLuong = Integer.parseInt(edsoLuong.getEditText().getText().toString());
                 item.maMau = maMau;
+
+                dao = new SizeGiayDAO(ct);
                 if(dao.insertSize(item)>0){
                     Toast.makeText(ct, "them thanh cong", Toast.LENGTH_SHORT).show();
                 }else{

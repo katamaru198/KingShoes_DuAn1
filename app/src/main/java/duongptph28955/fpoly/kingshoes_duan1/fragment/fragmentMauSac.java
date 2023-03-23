@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import duongptph28955.fpoly.kingshoes_duan1.Adapter.MauSacAdapter;
 import duongptph28955.fpoly.kingshoes_duan1.Adapter.SanPhamSpinnerAdapter;
 import duongptph28955.fpoly.kingshoes_duan1.Adapter.SizeGiayAdapter;
+import duongptph28955.fpoly.kingshoes_duan1.Adapter.SizeSpinnerAdapter;
 import duongptph28955.fpoly.kingshoes_duan1.DAO.MauSacDAO;
 import duongptph28955.fpoly.kingshoes_duan1.DAO.SanPhamDAO;
 import duongptph28955.fpoly.kingshoes_duan1.DAO.SizeGiayDAO;
@@ -42,7 +43,11 @@ public class fragmentMauSac extends Fragment {
     SanPhamSpinnerAdapter spinnerAdapter;
     ArrayList<SanPham> listsp;
     SanPhamDAO sanPhamDAO;
-    int maSP;
+    int maSP,maSize;
+    ArrayList<Size> listSize;
+    SizeSpinnerAdapter sizespn;
+    SizeGiayDAO sizeGiayDAO;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -77,6 +82,10 @@ public class fragmentMauSac extends Fragment {
         spinnerAdapter = new SanPhamSpinnerAdapter(getContext(),listsp);
         spn.setAdapter(spinnerAdapter);
 
+
+        TextInputLayout edSoLuong = v.findViewById(R.id.edSoLuongSanPham);
+
+
         spn.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -89,6 +98,8 @@ public class fragmentMauSac extends Fragment {
 
             }
         });
+
+
         builder.setNegativeButton("Huy", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -101,6 +112,7 @@ public class fragmentMauSac extends Fragment {
                 item = new MauSac();
                 item.tenMau = edMauSac.getEditText().getText().toString();
                 item.maSP = maSP;
+                item.soLuong = Integer.parseInt(edSoLuong.getEditText().getText().toString());
                 if(dao.insertMauSac(item)>0){
                     Toast.makeText(ct, "them thanh cong", Toast.LENGTH_SHORT).show();
                 }else{
