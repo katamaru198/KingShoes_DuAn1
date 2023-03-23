@@ -20,20 +20,17 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL(tbLoaiGiay);
 
         String tbMauSac = "Create table MAUSAC(maMau integer primary key autoincrement," +
-                "tenMau text not null," +
-                "maSanPham references SANPHAM(maSanPham)," +
-                "soLuong integer not null)";
+                "tenMau text not null)";
         db.execSQL(tbMauSac);
 
         String tbSize = "Create table SIZE(maSize integer primary key autoincrement," +
-                "size text not null," +
-                "maSanPham references SANPHAM(maSanPham)," +
-                "maMau references MAUSAC(maMau)," +
-                "soLuong integer not null)";
+                "size text not null)";
         db.execSQL(tbSize);
 
         String tbSanPham = "Create table SANPHAM(maSanPham integer primary key autoincrement," +
                 "maLoai integer references LOAIGIAY(maLoai)," +
+                "maMau integer references MAUSAC(maMau)," +
+                "maSize integer references SIZE(maSize)," +
                 "tenSanPham text not null," +
                 "giaNhap integer not null," +
                 "soLuong integer not null," +

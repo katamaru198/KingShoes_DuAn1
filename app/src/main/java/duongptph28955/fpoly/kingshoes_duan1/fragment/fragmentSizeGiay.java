@@ -42,14 +42,6 @@ public class fragmentSizeGiay extends Fragment {
     Size item;
     SizeGiayAdapter adapter;
     SizeGiayDAO dao;
-    SanPhamSpinnerAdapter spinnerAdapter;
-    ArrayList<SanPham> listsp;
-    SanPhamDAO sanPhamDAO;
-    int maSP,maMau;
-    MauSacDAO mauSacDAO;
-    TenMauSpinnerAdapter tmAdapter;
-
-    ArrayList<MauSac> listmau;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -78,47 +70,6 @@ public class fragmentSizeGiay extends Fragment {
         View v = inflater.inflate(R.layout.dialog_themsizegiay,null);
         builder.setView(v);
         TextInputLayout edSize = v.findViewById(R.id.edSize);
-        Spinner spn = v.findViewById(R.id.spnGiay);
-        listsp = new ArrayList<>();
-        sanPhamDAO = new SanPhamDAO(ct);
-        listsp = sanPhamDAO.getDSSanPham();
-        spinnerAdapter = new SanPhamSpinnerAdapter(getContext(),listsp);
-        spn.setAdapter(spinnerAdapter);
-
-        Spinner spnMau = v.findViewById(R.id.spnMau);
-        listmau = new ArrayList<>();
-        mauSacDAO = new MauSacDAO(ct);
-        listmau = (ArrayList<MauSac>) mauSacDAO.getAll();
-        tmAdapter = new TenMauSpinnerAdapter(getContext(),listmau);
-        spnMau.setAdapter(tmAdapter);
-
-        TextInputLayout edsoLuong = v.findViewById(R.id.edsoLuong);
-        spnMau.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                maMau = listmau.get(position).maMau;
-
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-
-
-        spn.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                maSP = listsp.get(position).maSP;
-                Toast.makeText(ct, "Chon: "+listsp.get(position).getTenSP(),Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
         builder.setNegativeButton("Huy", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -129,10 +80,7 @@ public class fragmentSizeGiay extends Fragment {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 item = new Size();
-                item.soLuong = Integer.parseInt(edsoLuong.getEditText().getText().toString());
                 item.size = edSize.getEditText().getText().toString();
-                item.maSP = maSP;
-                item.maMau = maMau;
 
                 dao = new SizeGiayDAO(ct);
                 if(dao.insertSize(item)>0){

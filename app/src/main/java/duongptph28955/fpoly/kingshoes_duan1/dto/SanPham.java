@@ -8,12 +8,14 @@ public class SanPham {
     private int giaNhap ;
     private int soLuong;
     private String ngayNhap;
+    private int maMau;
+    private int maSize;
     private byte[] hinhAnh;
 
     public SanPham() {
     }
 
-    public SanPham(int maSP, int maLoai, String tenLoai, String tenSP, int giaNhap, int soLuong, String ngayNhap, byte[] hinhAnh) {
+    public SanPham(int maSP, int maLoai, String tenLoai, String tenSP, int giaNhap, int soLuong, String ngayNhap, int maMau, int maSize, byte[] hinhAnh) {
         this.maSP = maSP;
         this.maLoai = maLoai;
         this.tenLoai = tenLoai;
@@ -21,6 +23,8 @@ public class SanPham {
         this.giaNhap = giaNhap;
         this.soLuong = soLuong;
         this.ngayNhap = ngayNhap;
+        this.maMau = maMau;
+        this.maSize =maSize;
         this.hinhAnh = hinhAnh;
     }
 
@@ -65,6 +69,22 @@ public class SanPham {
 
     public void setTenSP(String tenSP) {
         this.tenSP = tenSP;
+    }
+
+    public int getMaMau() {
+        return maMau;
+    }
+
+    public void setMaMau(int maMau) {
+        this.maMau = maMau;
+    }
+
+    public int getMaSize() {
+        return maSize;
+    }
+
+    public void setMaSize(int maSize) {
+        this.maSize = maSize;
     }
 
     public int getGiaNhap() {

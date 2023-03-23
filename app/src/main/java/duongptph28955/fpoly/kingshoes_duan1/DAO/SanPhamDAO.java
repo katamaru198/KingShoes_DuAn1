@@ -23,17 +23,17 @@ public class SanPhamDAO {
     public ArrayList<SanPham> getDSSanPham(){
         ArrayList<SanPham> list = new ArrayList<>();
         SQLiteDatabase sqLiteDatabase = dbHelper.getReadableDatabase();
-        Cursor cursor = sqLiteDatabase.rawQuery("SELECT sp.maSanPham, lg.maLoai, lg.tenLoai, sp.tenSanPham, sp.giaNhap, sp.soLuong, sp.ngayNhap, sp.hinhAnh FROM SANPHAM sp, LOAIGIAY lg WHERE sp.maLoai = lg.maLoai", null);
+        Cursor cursor = sqLiteDatabase.rawQuery("SELECT sp.maSanPham, lg.maLoai, lg.tenLoai, sp.tenSanPham, sp.giaNhap, sp.soLuong, sp.ngayNhap, ms.maMau, sz.maSize, sp.hinhAnh FROM SANPHAM sp, LOAIGIAY lg, MAUSAC ms, SIZE sz WHERE sp.maLoai = lg.maLoai and sp.maMau = ms.maMau and sp.maSize = sz.maSize", null);
         if (cursor.getCount() != 0){
             cursor.moveToFirst();
             do {
-                list.add(new SanPham(cursor.getInt(0), cursor.getInt(1), cursor.getString(2), cursor.getString(3), cursor.getInt(4), cursor.getInt(5), cursor.getString(6), cursor.getBlob(7)));
+                list.add(new SanPham(cursor.getInt(0), cursor.getInt(1), cursor.getString(2), cursor.getString(3), cursor.getInt(4), cursor.getInt(5), cursor.getString(6),cursor.getInt(7), cursor.getInt(8), cursor.getBlob(9)));
             }while (cursor.moveToNext());
         }
         return list;
     }
 
-    public boolean themGiayMoi(String tensp, int maloai, int gianhap, int soluong, String ngaynhap, byte[] hinh){
+    public boolean themGiayMoi(String tensp, int maloai, int gianhap, int soluong, String ngaynhap,int mamau, int masize, byte[] hinh){
         SQLiteDatabase sqLiteDatabase = dbHelper.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put("tenSanPham", tensp);
@@ -41,6 +41,8 @@ public class SanPhamDAO {
         contentValues.put("giaNhap", gianhap);
         contentValues.put("soLuong", soluong);
         contentValues.put("ngayNhap", ngaynhap);
+        contentValues.put("maMau", mamau);
+        contentValues.put("maSize", masize);
         contentValues.put("hinhAnh", hinh);
         long check = sqLiteDatabase.insert("SANPHAM", null, contentValues);
         if (check == -1)

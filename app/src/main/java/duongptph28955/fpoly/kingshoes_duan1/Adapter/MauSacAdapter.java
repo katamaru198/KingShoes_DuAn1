@@ -36,20 +36,9 @@ public class MauSacAdapter extends ArrayAdapter<MauSac> {
 
     fragmentMauSac frag;
 
-    TextView tvMauSac,tvMaSP,tvSoLuong;
+    TextView tvMauSac;
 
     ImageView ivDel,ivEdit;
-
-    SanPhamDAO dao;
-
-    SanPhamSpinnerAdapter spinnerAdapter;
-    int maSP,maSize;
-
-    ArrayList<SanPham> listsp;
-    ArrayList<Size> listSize;
-    SizeGiayDAO sizeGiayDAO;
-    SizeSpinnerAdapter spnSizeAdapter;
-
     public MauSacAdapter(@NonNull Context context, ArrayList<MauSac> list, fragmentMauSac frag) {
         super(context, 0,list);
         this.context = context;
@@ -71,22 +60,12 @@ public class MauSacAdapter extends ArrayAdapter<MauSac> {
         final MauSac item = list.get(vitri);
 
         if(item != null){
-            SanPhamDAO sanPhamDAO = new SanPhamDAO(context);
-            SanPham sanPham = sanPhamDAO.getID(String.valueOf(item.maSP));
-            SizeGiayDAO sizeGiayDAO = new SizeGiayDAO(context);
+
 
             tvMauSac = v.findViewById(R.id.txtMauSac);
-            tvMaSP = v.findViewById(R.id.txtTenLoaiSP1);
-
-            tvSoLuong = v.findViewById(R.id.txtSoLuong3);
-
 
 
             tvMauSac.setText("Màu: "+item.tenMau);
-            tvMaSP.setText("Tên giày: "+sanPham.tenSP);
-
-            tvSoLuong.setText("Số lương"+item.soLuong);
-
 
 
         }
@@ -125,36 +104,13 @@ public class MauSacAdapter extends ArrayAdapter<MauSac> {
                 LayoutInflater inflater = ((Activity)context).getLayoutInflater();
                 View view = inflater.inflate(R.layout.dialog_editmausac,null);
                 TextInputLayout edSize = view.findViewById(R.id.edtTenLoai2);
-                TextInputLayout edSoLuong = view.findViewById(R.id.edSoLuongSP);
-                edSoLuong.getEditText().setText(item.getSoLuong());
                 edSize.getEditText().setText(item.getTenMau());
-                listsp = new ArrayList<SanPham>();
-                dao = new SanPhamDAO(context);
-                listsp = dao.getDSSanPham();
-                Spinner spn = view.findViewById(R.id.spn_tenSPnew1);
-                spinnerAdapter = new SanPhamSpinnerAdapter(context,listsp);
-                spn.setAdapter(spinnerAdapter);
 
-
-                spn.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                    @Override
-                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                        maSP = listsp.get(position).getMaSP();
-
-                    }
-
-                    @Override
-                    public void onNothingSelected(AdapterView<?> parent) {
-
-                    }
-                });
                 builder.setView(view);
                 builder.setPositiveButton("Sửa", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         item.setTenMau(edSize.getEditText().getText().toString());
-                        item.setMaSP(maSP);
-                        item.setSoLuong(Integer.parseInt(edSoLuong.getEditText().getText().toString()));
 
                         MauSacDAO mauSacDAO = new MauSacDAO(context);
                         if(mauSacDAO.updateMauSac(item) > 0){
