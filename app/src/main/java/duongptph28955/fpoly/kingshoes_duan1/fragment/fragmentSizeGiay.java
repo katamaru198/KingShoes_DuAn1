@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.SpinnerAdapter;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -25,9 +26,12 @@ import java.util.ArrayList;
 import duongptph28955.fpoly.kingshoes_duan1.Adapter.SanPhamAdapter;
 import duongptph28955.fpoly.kingshoes_duan1.Adapter.SanPhamSpinnerAdapter;
 import duongptph28955.fpoly.kingshoes_duan1.Adapter.SizeGiayAdapter;
+import duongptph28955.fpoly.kingshoes_duan1.Adapter.TenMauSpinnerAdapter;
+import duongptph28955.fpoly.kingshoes_duan1.DAO.MauSacDAO;
 import duongptph28955.fpoly.kingshoes_duan1.DAO.SanPhamDAO;
 import duongptph28955.fpoly.kingshoes_duan1.DAO.SizeGiayDAO;
 import duongptph28955.fpoly.kingshoes_duan1.R;
+import duongptph28955.fpoly.kingshoes_duan1.dto.MauSac;
 import duongptph28955.fpoly.kingshoes_duan1.dto.SanPham;
 import duongptph28955.fpoly.kingshoes_duan1.dto.Size;
 
@@ -41,8 +45,11 @@ public class fragmentSizeGiay extends Fragment {
     SanPhamSpinnerAdapter spinnerAdapter;
     ArrayList<SanPham> listsp;
     SanPhamDAO sanPhamDAO;
-    int maSP;
+    int maSP,maMau;
+    MauSacDAO mauSacDAO;
+    TenMauSpinnerAdapter tmAdapter;
 
+    ArrayList<MauSac> listmau;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -78,6 +85,28 @@ public class fragmentSizeGiay extends Fragment {
         spinnerAdapter = new SanPhamSpinnerAdapter(getContext(),listsp);
         spn.setAdapter(spinnerAdapter);
 
+        Spinner spnMau = v.findViewById(R.id.spnMau);
+        listmau = new ArrayList<>();
+        mauSacDAO = new MauSacDAO(ct);
+        listmau = (ArrayList<MauSac>) mauSacDAO.getAll();
+        tmAdapter = new TenMauSpinnerAdapter(getContext(),listmau);
+        spnMau.setAdapter(tmAdapter);
+
+        TextInputLayout edsoLuong = v.findViewById(R.id.edsoLuong);
+        spnMau.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                maMau = listmau.get(position).maMau;
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+
         spn.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -102,6 +131,8 @@ public class fragmentSizeGiay extends Fragment {
                 item = new Size();
                 item.size = edSize.getEditText().getText().toString();
                 item.maSP = maSP;
+                item.soLuong = Integer.parseInt(edsoLuong.getEditText().getText().toString());
+                item.maMau = maMau;
                 if(dao.insertSize(item)>0){
                     Toast.makeText(ct, "them thanh cong", Toast.LENGTH_SHORT).show();
                 }else{

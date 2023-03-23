@@ -23,12 +23,16 @@ public class SizeGiayDAO {
         ContentValues values = new ContentValues();
         values.put("size", obj.getSize());
         values.put("maSanPham", obj.getMaSP());
+        values.put("maMau",obj.getMaMau());
+        values.put("soLuong",obj.getSoLuong());
         return db.insert("SIZE", null, values);
     }
     public int updateSize( Size obj){
         ContentValues values = new ContentValues();
         values.put("size", obj.getSize());
         values.put("maSanPham", obj.getMaSP());
+        values.put("maMau",obj.getMaMau());
+        values.put("soLuong",obj.getSoLuong());
         return db.update("SIZE", values, "maSize=?", new String[]{ obj.getMaSP()+ ""});
     }
     public int deleteSize( Size obj){
@@ -44,6 +48,8 @@ public class SizeGiayDAO {
             obj.maSize = Integer.parseInt(c.getString( c.getColumnIndex("maSize")));
             obj.size = c.getString( c.getColumnIndex("size"));
             obj.maSP = Integer.parseInt(c.getString( c.getColumnIndex("maSanPham")));
+            obj.maMau = Integer.parseInt(c.getString(c.getColumnIndex("maMau")));
+            obj.soLuong = Integer.parseInt(c.getString(c.getColumnIndex("soLuong")));
             list.add(obj);
         }
         return list;
