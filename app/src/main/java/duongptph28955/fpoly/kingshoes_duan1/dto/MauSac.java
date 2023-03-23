@@ -2,16 +2,22 @@ package duongptph28955.fpoly.kingshoes_duan1.dto;
 
 public class MauSac {
     public int maMau;
+
+
     public String tenMau;
+
     public int maSP;
+    public int soLuong;
 
     public MauSac() {
     }
 
-    public MauSac(int maMau, String tenMau, int maSP) {
+    public MauSac(int maMau,  String tenMau, int maSP, int soLuong) {
         this.maMau = maMau;
+
         this.tenMau = tenMau;
         this.maSP = maSP;
+        this.soLuong = soLuong;
     }
 
     public int getMaMau() {
@@ -21,6 +27,8 @@ public class MauSac {
     public void setMaMau(int maMau) {
         this.maMau = maMau;
     }
+
+
 
     public String getTenMau() {
         return tenMau;
@@ -36,5 +44,13 @@ public class MauSac {
 
     public void setMaSP(int maSP) {
         this.maSP = maSP;
+    }
+
+    public int getSoLuong() {
+        return soLuong;
+    }
+
+    public void setSoLuong(int soLuong) {
+        this.soLuong = soLuong;
     }
 }

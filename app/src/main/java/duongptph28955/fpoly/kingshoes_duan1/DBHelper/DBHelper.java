@@ -21,7 +21,8 @@ public class DBHelper extends SQLiteOpenHelper {
 
         String tbMauSac = "Create table MAUSAC(maMau integer primary key autoincrement," +
                 "tenMau text not null," +
-                "maSanPham references SANPHAM(maSanPham))";
+                "maSanPham references SANPHAM(maSanPham)," +
+                "soLuong integer not null)";
         db.execSQL(tbMauSac);
 
         String tbSize = "Create table SIZE(maSize integer primary key autoincrement," +
