@@ -22,6 +22,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.DatePicker;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -51,11 +52,17 @@ import java.util.Date;
 import java.util.HashMap;
 
 import duongptph28955.fpoly.kingshoes_duan1.Adapter.SanPhamAdapter;
+import duongptph28955.fpoly.kingshoes_duan1.Adapter.SizeSpinnerAdapter;
+import duongptph28955.fpoly.kingshoes_duan1.Adapter.TenMauSpinnerAdapter;
 import duongptph28955.fpoly.kingshoes_duan1.DAO.LoaiGiayDAO;
+import duongptph28955.fpoly.kingshoes_duan1.DAO.MauSacDAO;
 import duongptph28955.fpoly.kingshoes_duan1.DAO.SanPhamDAO;
+import duongptph28955.fpoly.kingshoes_duan1.DAO.SizeGiayDAO;
 import duongptph28955.fpoly.kingshoes_duan1.R;
 import duongptph28955.fpoly.kingshoes_duan1.dto.LoaiGiay;
+import duongptph28955.fpoly.kingshoes_duan1.dto.MauSac;
 import duongptph28955.fpoly.kingshoes_duan1.dto.SanPham;
+import duongptph28955.fpoly.kingshoes_duan1.dto.Size;
 
 public class fragmentSanPham extends Fragment {
     ImageButton ibtnCamera, ibtnFolder;
@@ -68,7 +75,16 @@ public class fragmentSanPham extends Fragment {
     SanPhamDAO sanPhamDAO;
     TextInputLayout edtNgayNhapSP;
 
-    int masp;
+    int masp, maMau, maSize;
+
+    ArrayList<Size> listSize;
+    SizeSpinnerAdapter spnSizeAdapter;
+    SizeGiayDAO sizeGiayDAO;
+
+    MauSacDAO mauSacDAO;
+    TenMauSpinnerAdapter spnMauAdapter;
+
+    ArrayList<MauSac> listmau;
 
     @Nullable
     @Override
@@ -115,6 +131,43 @@ public class fragmentSanPham extends Fragment {
         TextInputLayout edtGiaNhapSP = view.findViewById(R.id.edtGiaNhapDia);
         TextInputLayout edtSoLuongSP = view.findViewById(R.id.edtSoLuongDia);
         edtNgayNhapSP = view.findViewById(R.id.edtNgayNhapDia);
+
+        Spinner spnSize = view.findViewById(R.id.spnSize);
+        Spinner spnMau = view.findViewById(R.id.spnMau);
+
+        listSize = new ArrayList<>();
+        sizeGiayDAO = new SizeGiayDAO(getContext());
+        listSize = (ArrayList<Size>) sizeGiayDAO.getAll();
+        spnSizeAdapter = new SizeSpinnerAdapter(getContext(), listSize);
+        spnSize.setAdapter(spnSizeAdapter);
+        spnSize.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                maSize = listSize.get(i).getMaSize();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+        listmau = new ArrayList<>();
+        mauSacDAO = new MauSacDAO(getContext());
+        listmau = (ArrayList<MauSac>) mauSacDAO.getAll();
+        spnMauAdapter = new TenMauSpinnerAdapter(getContext(), listmau);
+        spnMau.setAdapter(spnMauAdapter);
+        spnMau.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                maMau = listmau.get(i).getMaMau();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
         edtNgayNhapSP.setEndIconOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -178,7 +231,7 @@ public class fragmentSanPham extends Fragment {
                 bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArray); //ép kiểu ảnh về png, độ phân giải ảnh mặc định 100 - cảng nhỏ hơn càng nét(1-100), dữ liệu truyền vào;
                 byte[] hinhAnh = byteArray.toByteArray(); //mảng byte để chứa dữ liệu
 
-                boolean check = sanPhamDAO.themGiayMoi(tensp, maloai,gianhap, soluong, ngaynhap, hinhAnh);
+                boolean check = sanPhamDAO.themGiayMoi(tensp, maloai,gianhap, soluong, ngaynhap,maMau, maSize, hinhAnh);
                 if (check){
                     Toast.makeText(getContext(), "Thêm sản phẩm thành công", Toast.LENGTH_SHORT).show();
                     loadData();

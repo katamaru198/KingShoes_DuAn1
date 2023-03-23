@@ -6,18 +6,14 @@ public class MauSac {
 
     public String tenMau;
 
-    public int maSP;
-    public int soLuong;
+
 
     public MauSac() {
     }
 
-    public MauSac(int maMau,  String tenMau, int maSP, int soLuong) {
+    public MauSac(int maMau, String tenMau) {
         this.maMau = maMau;
-
         this.tenMau = tenMau;
-        this.maSP = maSP;
-        this.soLuong = soLuong;
     }
 
     public int getMaMau() {
@@ -28,29 +24,11 @@ public class MauSac {
         this.maMau = maMau;
     }
 
-
-
     public String getTenMau() {
         return tenMau;
     }
 
     public void setTenMau(String tenMau) {
         this.tenMau = tenMau;
-    }
-
-    public int getMaSP() {
-        return maSP;
-    }
-
-    public void setMaSP(int maSP) {
-        this.maSP = maSP;
-    }
-
-    public int getSoLuong() {
-        return soLuong;
-    }
-
-    public void setSoLuong(int soLuong) {
-        this.soLuong = soLuong;
     }
 }

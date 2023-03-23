@@ -40,13 +40,8 @@ public class fragmentMauSac extends Fragment {
     MauSac item;
     MauSacAdapter adapter;
     MauSacDAO dao;
-    SanPhamSpinnerAdapter spinnerAdapter;
-    ArrayList<SanPham> listsp;
-    SanPhamDAO sanPhamDAO;
-    int maSP,maSize;
-    ArrayList<Size> listSize;
-    SizeSpinnerAdapter sizespn;
-    SizeGiayDAO sizeGiayDAO;
+
+
 
     @Nullable
     @Override
@@ -75,29 +70,7 @@ public class fragmentMauSac extends Fragment {
         View v = inflater.inflate(R.layout.dialog_themmausac,null);
         builder.setView(v);
         TextInputLayout edMauSac = v.findViewById(R.id.edtTenLoai);
-        Spinner spn = v.findViewById(R.id.spn_tenSPnew);
-        listsp = new ArrayList<>();
-        sanPhamDAO = new SanPhamDAO(ct);
-        listsp = sanPhamDAO.getDSSanPham();
-        spinnerAdapter = new SanPhamSpinnerAdapter(getContext(),listsp);
-        spn.setAdapter(spinnerAdapter);
 
-
-        TextInputLayout edSoLuong = v.findViewById(R.id.edSoLuongSanPham);
-
-
-        spn.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                maSP = listsp.get(position).maSP;
-                Toast.makeText(ct, "Chon: "+listsp.get(position).getTenSP(),Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
 
 
         builder.setNegativeButton("Huy", new DialogInterface.OnClickListener() {
@@ -111,8 +84,6 @@ public class fragmentMauSac extends Fragment {
             public void onClick(DialogInterface dialog, int which) {
                 item = new MauSac();
                 item.tenMau = edMauSac.getEditText().getText().toString();
-                item.maSP = maSP;
-                item.soLuong = Integer.parseInt(edSoLuong.getEditText().getText().toString());
                 if(dao.insertMauSac(item)>0){
                     Toast.makeText(ct, "them thanh cong", Toast.LENGTH_SHORT).show();
                 }else{

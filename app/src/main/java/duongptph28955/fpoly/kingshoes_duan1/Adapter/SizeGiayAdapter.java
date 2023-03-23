@@ -37,21 +37,10 @@ public class SizeGiayAdapter extends ArrayAdapter<Size> {
 
     fragmentSizeGiay fragment;
 
-    TextView tvMaSize,tvSize,tvMaSP,tvTenMau,tvsoLuong;
+    TextView tvMaSize,tvSize;
 
     ImageView ivDel,ivEdit;
-    
-    SanPhamDAO dao;
-    
-    SanPhamSpinnerAdapter spinnerAdapter;
-    int maSP,maMau;
 
-    MauSacDAO mauSacDAO;
-    TenMauSpinnerAdapter tmAdapter;
-
-    ArrayList<MauSac> listmau;
-
-    ArrayList<SanPham> listsp;
     public SizeGiayAdapter(@NonNull Context context, ArrayList<Size> list, fragmentSizeGiay fragment) {
         super(context, 0, list);
         this.context = context;
@@ -73,23 +62,13 @@ public class SizeGiayAdapter extends ArrayAdapter<Size> {
         final Size item = list.get(vitri);
 
         if(item != null){
-            SanPhamDAO sanPhamDAO = new SanPhamDAO(context);
-            SanPham sanPham = sanPhamDAO.getID(String.valueOf(item.maSP));
-            MauSacDAO mauSacDAO = new MauSacDAO(context);
-            MauSac mauSac = mauSacDAO.getID(String.valueOf(item.maMau));
-
             tvMaSize = v.findViewById(R.id.txtMaSize);
             tvSize = v.findViewById(R.id.txtSize);
-            tvMaSP = v.findViewById(R.id.txtMaSP);
-            tvTenMau = v.findViewById(R.id.txtTenMau);
-            tvsoLuong = v.findViewById(R.id.txtsoLuong);
 
 
             tvMaSize.setText("Ma Size: "+item.maSize);
             tvSize.setText("Size: "+item.size);
-            tvMaSP.setText("Ten giay: "+sanPham.tenSP);
-            tvTenMau.setText("Màu: "+mauSac.tenMau);
-            tvsoLuong.setText("So luong: "+item.soLuong);
+
 
 
 
@@ -130,53 +109,12 @@ public class SizeGiayAdapter extends ArrayAdapter<Size> {
                 View view = inflater.inflate(R.layout.dialog_editsizegiay,null);
                 TextInputLayout edSize = view.findViewById(R.id.edtDiaEditSize);
                 edSize.getEditText().setText(item.getSize());
-                listsp = new ArrayList<SanPham>();
-                dao = new SanPhamDAO(context);
-                listsp = dao.getDSSanPham();
-                Spinner spn = view.findViewById(R.id.spnGiay);
-                spinnerAdapter = new SanPhamSpinnerAdapter(context,listsp);
-                spn.setAdapter(spinnerAdapter);
 
-                mauSacDAO = new MauSacDAO(context);
-                listmau = (ArrayList<MauSac>) mauSacDAO.getAll();
-                Spinner spnMau = view.findViewById(R.id.spnMau1);
-                tmAdapter = new TenMauSpinnerAdapter(context,listmau);
-               spnMau.setAdapter(tmAdapter);
-               TextInputLayout edsoLuong = view.findViewById(R.id.edtDiaEditsoLuong);
-               edsoLuong.getEditText().setText(Integer.toString(item.getSoLuong()));
-                spnMau.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                    @Override
-                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                        maMau = listmau.get(position).getMaMau();
-                    }
-
-                    @Override
-                    public void onNothingSelected(AdapterView<?> parent) {
-
-                    }
-                });
-
-
-                spn.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                    @Override
-                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                        maSP = listsp.get(position).getMaSP();
-
-                    }
-
-                    @Override
-                    public void onNothingSelected(AdapterView<?> parent) {
-
-                    }
-                });
                 builder.setView(view);
                 builder.setPositiveButton("Sửa", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         item.setSize(edSize.getEditText().getText().toString());
-                        item.setMaSP(maSP);
-                        item.soLuong = Integer.parseInt(edsoLuong.getEditText().getText().toString());
-                        item.maMau = maMau;
                         SizeGiayDAO sizeGiayDAO = new SizeGiayDAO(context);
                         if(sizeGiayDAO.updateSize(item) > 0){
                             list.set(vitri,item);

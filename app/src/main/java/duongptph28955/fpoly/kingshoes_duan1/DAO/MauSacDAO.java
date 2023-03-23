@@ -24,20 +24,16 @@ public class MauSacDAO {
         ContentValues values = new ContentValues();
 
         values.put("tenMau", obj.getTenMau());
-        values.put("maSanPham", obj.getMaSP());
-        values.put("soLuong",obj.getSoLuong());
         return db.insert("MAUSAC", null, values);
     }
     public int updateMauSac( MauSac obj){
         ContentValues values = new ContentValues();
 
         values.put("tenMau", obj.getTenMau());
-        values.put("maSanPham", obj.getMaSP());
-        values.put("soLuong",obj.getSoLuong());
-        return db.update("MAUSAC", values, "maMau=?", new String[]{ obj.getMaSP()+ ""});
+        return db.update("MAUSAC", values, "maMau=?", new String[]{ obj.getMaMau()+ ""});
     }
     public int deleteMauSac( MauSac obj){
-        return db.delete("MAUSAC", "maMau=?", new String[]{ obj.getMaSP()+ ""});
+        return db.delete("MAUSAC", "maMau=?", new String[]{ obj.getMaMau()+ ""});
     }
 
     @SuppressLint("Range")
@@ -48,8 +44,6 @@ public class MauSacDAO {
             MauSac obj = new MauSac();
             obj.maMau = Integer.parseInt(c.getString( c.getColumnIndex("maMau")));
             obj.tenMau = c.getString( c.getColumnIndex("tenMau"));
-            obj.maSP = Integer.parseInt(c.getString( c.getColumnIndex("maSanPham")));
-            obj.soLuong = Integer.parseInt(c.getString( c.getColumnIndex("soLuong")));
             list.add(obj);
         }
         return list;
