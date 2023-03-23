@@ -22,9 +22,11 @@ import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.ArrayList;
 
+import duongptph28955.fpoly.kingshoes_duan1.DAO.MauSacDAO;
 import duongptph28955.fpoly.kingshoes_duan1.DAO.SanPhamDAO;
 import duongptph28955.fpoly.kingshoes_duan1.DAO.SizeGiayDAO;
 import duongptph28955.fpoly.kingshoes_duan1.R;
+import duongptph28955.fpoly.kingshoes_duan1.dto.MauSac;
 import duongptph28955.fpoly.kingshoes_duan1.dto.SanPham;
 import duongptph28955.fpoly.kingshoes_duan1.dto.Size;
 import duongptph28955.fpoly.kingshoes_duan1.fragment.fragmentSizeGiay;
@@ -35,14 +37,19 @@ public class SizeGiayAdapter extends ArrayAdapter<Size> {
 
     fragmentSizeGiay fragment;
 
-    TextView tvMaSize,tvSize,tvMaSP;
+    TextView tvMaSize,tvSize,tvMaSP,tvTenMau,tvsoLuong;
 
     ImageView ivDel,ivEdit;
     
     SanPhamDAO dao;
     
     SanPhamSpinnerAdapter spinnerAdapter;
-    int maSP;
+    int maSP,maMau;
+
+    MauSacDAO mauSacDAO;
+    TenMauSpinnerAdapter tmAdapter;
+
+    ArrayList<MauSac> listmau;
 
     ArrayList<SanPham> listsp;
     public SizeGiayAdapter(@NonNull Context context, ArrayList<Size> list, fragmentSizeGiay fragment) {
@@ -68,14 +75,21 @@ public class SizeGiayAdapter extends ArrayAdapter<Size> {
         if(item != null){
             SanPhamDAO sanPhamDAO = new SanPhamDAO(context);
             SanPham sanPham = sanPhamDAO.getID(String.valueOf(item.maSP));
+            MauSacDAO mauSacDAO = new MauSacDAO(context);
+            MauSac mauSac = mauSacDAO.getID(String.valueOf(item.maMau));
+
             tvMaSize = v.findViewById(R.id.txtMaSize);
             tvSize = v.findViewById(R.id.txtSize);
             tvMaSP = v.findViewById(R.id.txtMaSP);
+            tvTenMau = v.findViewById(R.id.txtTenMau);
+            tvsoLuong = v.findViewById(R.id.txtsoLuong);
 
 
             tvMaSize.setText("Ma Size: "+item.maSize);
             tvSize.setText("Size: "+item.size);
             tvMaSP.setText("Ten giay: "+sanPham.tenSP);
+            tvTenMau.setText("Màu: "+mauSac.tenMau);
+            tvsoLuong.setText("So luong: "+item.soLuong);
 
 
 
@@ -122,6 +136,27 @@ public class SizeGiayAdapter extends ArrayAdapter<Size> {
                 Spinner spn = view.findViewById(R.id.spnGiay);
                 spinnerAdapter = new SanPhamSpinnerAdapter(context,listsp);
                 spn.setAdapter(spinnerAdapter);
+
+                mauSacDAO = new MauSacDAO(context);
+                listmau = (ArrayList<MauSac>) mauSacDAO.getAll();
+                Spinner spnMau = view.findViewById(R.id.spnMau1);
+                tmAdapter = new TenMauSpinnerAdapter(context,listmau);
+               spnMau.setAdapter(tmAdapter);
+               TextInputLayout edsoLuong = view.findViewById(R.id.edtDiaEditsoLuong);
+               edsoLuong.getEditText().setText(Integer.toString(item.getSoLuong()));
+                spnMau.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                        maMau = listmau.get(position).getMaMau();
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> parent) {
+
+                    }
+                });
+
+
                 spn.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                     @Override
                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -140,6 +175,8 @@ public class SizeGiayAdapter extends ArrayAdapter<Size> {
                     public void onClick(DialogInterface dialog, int which) {
                         item.setSize(edSize.getEditText().getText().toString());
                         item.setMaSP(maSP);
+                        item.soLuong = Integer.parseInt(edsoLuong.getEditText().getText().toString());
+                        item.maMau = maMau;
                         SizeGiayDAO sizeGiayDAO = new SizeGiayDAO(context);
                         if(sizeGiayDAO.updateSize(item) > 0){
                             list.set(vitri,item);
