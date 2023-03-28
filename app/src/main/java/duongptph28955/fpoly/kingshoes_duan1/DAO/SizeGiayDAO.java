@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import duongptph28955.fpoly.kingshoes_duan1.DBHelper.DBHelper;
+import duongptph28955.fpoly.kingshoes_duan1.dto.MauSac;
 import duongptph28955.fpoly.kingshoes_duan1.dto.Size;
 
 public class SizeGiayDAO {
@@ -59,5 +60,20 @@ public class SizeGiayDAO {
         String sql = "select * from SIZE where maSize=?";
         List<Size> list = getData(sql, id);
         return list.get(0);
+    }
+
+    public List<Size> getTimKiem(String timKiem){// nhà cung cấp có thế có nhiều loại sách
+        String sql = "select * from SIZE where size =?";
+        List<Size> list = getData(sql,timKiem);
+        return list;
+    }
+    public int checkSize(String size){
+        String  sql ="SELECT *FROM SIZE WHERE size =? ";
+        List<Size> list =getData(sql,size);
+        if (list.size()==0){
+            return -1;
+
+        }
+        return 1;
     }
 }
