@@ -1,5 +1,6 @@
 package duongptph28955.fpoly.kingshoes_duan1.fragment;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -7,6 +8,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -35,7 +38,7 @@ import duongptph28955.fpoly.kingshoes_duan1.dto.Size;
 
 public class fragmentMauSac extends Fragment {
     ListView lv;
-    FloatingActionButton fab;
+    FloatingActionButton fab,fabSearch;
     ArrayList<MauSac> list;
     MauSac item;
     MauSacAdapter adapter;
@@ -54,15 +57,50 @@ public class fragmentMauSac extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         lv = view.findViewById(R.id.lvMauSac);
         fab = view.findViewById(R.id. floatAddMauSac);
+        fabSearch = view.findViewById(R.id.floatSearchMauSac);
         dao = new MauSacDAO(getActivity());
         capNhatLv();
-
+        fabSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+            timkiem(getActivity());
+            }
+        });
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 openDialog(getContext());
             }
         });
+    }
+    public void timkiem(final Context context){
+        Dialog dialog = new Dialog(context);//khởi tạo dialog
+        dialog.setContentView(R.layout.dialog_searchmausac);//set layout cho dialog
+        TextInputLayout edTimKiem = dialog.findViewById(R.id.edTimMauSac);
+        Button btnSearch = dialog.findViewById(R.id.Sachseach_btnSearch);
+        Button btnHuy = dialog.findViewById(R.id.Sachseach_btnHuy);
+        btnHuy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        btnSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String timKiem = edTimKiem.getEditText().getText().toString();
+                if(edTimKiem.getEditText().getText().toString().equals("")){
+                    Toast.makeText(context, "Nhập tên màu cần tìm: ", Toast.LENGTH_SHORT).show();
+                }else{
+                    dao.getTimKiem(timKiem);
+                    list = (ArrayList<MauSac>) dao.getTimKiem(timKiem);
+                    adapter = new MauSacAdapter(getContext(),list,fragmentMauSac.this);
+                    lv.setAdapter(adapter);
+                }
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
     }
     protected void openDialog(final Context ct){
         AlertDialog.Builder builder = new AlertDialog.Builder(ct);
@@ -84,13 +122,18 @@ public class fragmentMauSac extends Fragment {
             public void onClick(DialogInterface dialog, int which) {
                 item = new MauSac();
                 item.tenMau = edMauSac.getEditText().getText().toString();
-                if(dao.insertMauSac(item)>0){
-                    Toast.makeText(ct, "them thanh cong", Toast.LENGTH_SHORT).show();
-                }else{
-                    Toast.makeText(ct, "them that bai", Toast.LENGTH_SHORT).show();
+                if (dao.checkMau(item.tenMau)<0){
+                    if(dao.insertMauSac(item)>0){
+                        Toast.makeText(ct, "them thanh cong", Toast.LENGTH_SHORT).show();
+                    }else{
+                        Toast.makeText(ct, "them that bai", Toast.LENGTH_SHORT).show();
+                    }
+                    dialog.dismiss();
+                }else {
+                    Toast.makeText(ct, "Màu đã tồn tại", Toast.LENGTH_SHORT).show();
                 }
                 capNhatLv();
-                dialog.dismiss();
+
             }
 
         });
