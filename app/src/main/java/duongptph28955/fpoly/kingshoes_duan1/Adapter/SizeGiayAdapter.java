@@ -126,6 +126,12 @@ public class SizeGiayAdapter extends ArrayAdapter<Size> {
                         }
                     }
                 });
+                builder.setNegativeButton("Huỷ", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.dismiss();
+                    }
+                });
                 builder.show();
             }
         });

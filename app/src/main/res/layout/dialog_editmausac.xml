@@ -48,25 +48,7 @@
         android:textColor="#FF0000"
         android:textSize="25dp"
         android:textStyle="bold"/>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginBottom="10dp"
-        android:orientation="horizontal">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:layout_marginRight="10dp"
-            android:text="Ten giay: "/>
-        <Spinner
-            android:id="@+id/spn_tenSPnew1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
 
-   </LinearLayout>
 
 
 
@@ -81,36 +63,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
     </com.google.android.material.textfield.TextInputLayout>
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/edSoLuongSP"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="20dp"
-        android:layout_marginTop="30dp"
-        android:hint="Số lượng Sản Phẩm">
-        <com.google.android.material.textfield.TextInputEditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-    </com.google.android.material.textfield.TextInputLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
 
-        <Button
-            android:id="@+id/sach_btnSave"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="10dp"
-            android:layout_weight="1"
-            android:text="Lưu" />
 
-        <Button
-            android:id="@+id/sach_btnCancel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Hủy" />
-    </LinearLayout>
 
 </LinearLayout>

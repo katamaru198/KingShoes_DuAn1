@@ -123,6 +123,12 @@ public class MauSacAdapter extends ArrayAdapter<MauSac> {
                         }
                     }
                 });
+                builder.setNegativeButton("Huỷ", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.dismiss();
+                    }
+                });
                 builder.show();
             }
         });
