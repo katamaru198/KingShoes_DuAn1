@@ -12,6 +12,7 @@ import java.util.List;
 
 import duongptph28955.fpoly.kingshoes_duan1.DBHelper.DBHelper;
 import duongptph28955.fpoly.kingshoes_duan1.dto.MauSac;
+import duongptph28955.fpoly.kingshoes_duan1.dto.ThanhVien;
 
 public class MauSacDAO {
     SQLiteDatabase db;
@@ -58,5 +59,19 @@ public class MauSacDAO {
         String sql = "select * from MAUSAC where maMau=?";
         List<MauSac> list = getData(sql, id);
         return list.get(0);
+    }
+    public List<MauSac> getTimKiem(String timKiem){// nhà cung cấp có thế có nhiều loại sách
+        String sql = "select * from MAUSAC where tenMau =?";
+        List<MauSac> list = getData(sql,timKiem);
+        return list;
+    }
+    public int checkMau(String mau){
+        String  sql ="SELECT *FROM MAUSAC WHERE tenMau =? ";
+        List<MauSac> list =getData(sql,mau);
+        if (list.size()==0){
+            return -1;
+
+        }
+        return 1;
     }
 }

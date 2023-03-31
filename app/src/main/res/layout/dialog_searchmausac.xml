@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+    android:layout_width="380dp"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:gravity="center">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -27,6 +28,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -38,10 +40,11 @@
         </LinearLayout>
     </LinearLayout>
     <TextView
+        android:id="@+id/tv_mausac"
         android:layout_marginTop="20dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="THÊM SIZE GIAY"
+        android:text="TÌM MÀU SẮC"
         android:textColor="#FF0000"
         android:textSize="25dp"
         android:textStyle="bold"/>
@@ -49,17 +52,37 @@
 
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/edSize"
+        android:id="@+id/edTimMauSac"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginBottom="10dp"
-        android:layout_marginTop="20dp"
-        android:hint="Size">
+        android:layout_margin="20dp"
+        android:layout_marginTop="30dp"
+        android:hint="Tên màu sắc">
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="number"/>
+            android:layout_height="wrap_content" />
     </com.google.android.material.textfield.TextInputLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+
+        <Button
+            android:id="@+id/Sachseach_btnSearch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Tìm kiếm"
+            android:layout_margin="20dp"/>
+
+        <Button
+            android:id="@+id/Sachseach_btnHuy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Hủy"
+            android:layout_margin="20dp"/>
+    </LinearLayout>
+
 </LinearLayout>
