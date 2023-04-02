@@ -6,11 +6,9 @@ import static android.content.ContentValues.TAG;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
-import android.app.Dialog;
 import android.content.ContentResolver;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
@@ -22,7 +20,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.DatePicker;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -33,7 +30,6 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -47,13 +43,13 @@ import java.io.InputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 
 import duongptph28955.fpoly.kingshoes_duan1.Adapter.SanPhamAdapter;
-import duongptph28955.fpoly.kingshoes_duan1.Adapter.SizeSpinnerAdapter;
-import duongptph28955.fpoly.kingshoes_duan1.Adapter.TenMauSpinnerAdapter;
 import duongptph28955.fpoly.kingshoes_duan1.DAO.LoaiGiayDAO;
 import duongptph28955.fpoly.kingshoes_duan1.DAO.MauSacDAO;
 import duongptph28955.fpoly.kingshoes_duan1.DAO.SanPhamDAO;
@@ -78,19 +74,19 @@ public class fragmentSanPham extends Fragment {
     int masp, maMau, maSize;
 
     ArrayList<Size> listSize;
-    SizeSpinnerAdapter spnSizeAdapter;
+
     SizeGiayDAO sizeGiayDAO;
 
     MauSacDAO mauSacDAO;
-    TenMauSpinnerAdapter spnMauAdapter;
 
     ArrayList<MauSac> listmau;
+    TextView txtSize, txtMau;
+
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_sanpham, container, false);
-
         recyclerSanPham = view.findViewById(R.id.recyclerSanPham);
         FloatingActionButton floatAdd = view.findViewById(R.id.floatAdd);
 
@@ -106,7 +102,7 @@ public class fragmentSanPham extends Fragment {
         return view;
     }
 
-    private void loadData(){
+    private void loadData() {
         ArrayList<SanPham> list = sanPhamDAO.getDSSanPham();
 
         GridLayoutManager linearLayoutManager = new GridLayoutManager(getContext(), 2, GridLayoutManager.VERTICAL, false);
@@ -121,7 +117,7 @@ public class fragmentSanPham extends Fragment {
         recyclerSanPham.setAdapter(adapter);
     }
 
-    private void showDialog(){
+    private void showDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         LayoutInflater inflater = getLayoutInflater();
         View view = inflater.inflate(R.layout.dialog_themsanpham, null);
@@ -131,43 +127,21 @@ public class fragmentSanPham extends Fragment {
         TextInputLayout edtGiaNhapSP = view.findViewById(R.id.edtGiaNhapDia);
         TextInputLayout edtSoLuongSP = view.findViewById(R.id.edtSoLuongDia);
         edtNgayNhapSP = view.findViewById(R.id.edtNgayNhapDia);
+        txtSize = view.findViewById(R.id.txtSize);
+        txtMau = view.findViewById(R.id.txtMau);
 
-        Spinner spnSize = view.findViewById(R.id.spnSize);
-        Spinner spnMau = view.findViewById(R.id.spnMau);
-
-        listSize = new ArrayList<>();
-        sizeGiayDAO = new SizeGiayDAO(getContext());
-        listSize = (ArrayList<Size>) sizeGiayDAO.getAll();
-        spnSizeAdapter = new SizeSpinnerAdapter(getContext(), listSize);
-        spnSize.setAdapter(spnSizeAdapter);
-        spnSize.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        view.findViewById(R.id.btnSIZE).setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                maSize = listSize.get(i).getMaSize();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
+            public void onClick(View view) {
+                showDialogSize();
             }
         });
-        listmau = new ArrayList<>();
-        mauSacDAO = new MauSacDAO(getContext());
-        listmau = (ArrayList<MauSac>) mauSacDAO.getAll();
-        spnMauAdapter = new TenMauSpinnerAdapter(getContext(), listmau);
-        spnMau.setAdapter(spnMauAdapter);
-        spnMau.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        view.findViewById(R.id.btnMAU).setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                maMau = listmau.get(i).getMaMau();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
+            public void onClick(View view) {
+                showDialogMau();
             }
         });
-
         edtNgayNhapSP.setEndIconOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -197,7 +171,7 @@ public class fragmentSanPham extends Fragment {
 //                        REQUEST_CODE_CAMERA
 //                );
                 Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                    startActivityForResult(intent, REQUEST_CODE_CAMERA);
+                startActivityForResult(intent, REQUEST_CODE_CAMERA);
             }
         });
 
@@ -209,9 +183,9 @@ public class fragmentSanPham extends Fragment {
 //                        new String[]{android.Manifest.permission.READ_EXTERNAL_STORAGE},
 //                        REQUEST_CODE_FOLDER
 //                );
-                    Intent intent = new Intent(Intent.ACTION_PICK);
-                    intent.setType("image/*");
-                    startActivityForResult(intent, REQUEST_CODE_FOLDER);
+                Intent intent = new Intent(Intent.ACTION_PICK);
+                intent.setType("image/*");
+                startActivityForResult(intent, REQUEST_CODE_FOLDER);
             }
         });
         builder.setNegativeButton("Thêm", new DialogInterface.OnClickListener() {
@@ -222,20 +196,22 @@ public class fragmentSanPham extends Fragment {
                 int maloai = (int) hs.get("maLoai");
                 int gianhap = Integer.parseInt(edtGiaNhapSP.getEditText().getText().toString());
                 int soluong = Integer.parseInt(edtSoLuongSP.getEditText().getText().toString());
+                String tenMau = txtMau.getText().toString();
+                String tenSize = txtSize.getText().toString();
                 String ngaynhap = edtNgayNhapSP.getEditText().getText().toString();
 
                 //chuyển data imageview sang mảng byte[]
-                BitmapDrawable bitmapDrawable= (BitmapDrawable) imgHinh.getDrawable();
+                BitmapDrawable bitmapDrawable = (BitmapDrawable) imgHinh.getDrawable();
                 Bitmap bitmap = bitmapDrawable.getBitmap();
                 ByteArrayOutputStream byteArray = new ByteArrayOutputStream();
                 bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArray); //ép kiểu ảnh về png, độ phân giải ảnh mặc định 100 - cảng nhỏ hơn càng nét(1-100), dữ liệu truyền vào;
                 byte[] hinhAnh = byteArray.toByteArray(); //mảng byte để chứa dữ liệu
 
-                boolean check = sanPhamDAO.themGiayMoi(tensp, maloai,gianhap, soluong, ngaynhap,maMau, maSize, hinhAnh);
-                if (check){
+                boolean check = sanPhamDAO.themGiayMoi(tensp, maloai, gianhap, soluong, ngaynhap, tenMau, tenSize, hinhAnh);
+                if (check) {
                     Toast.makeText(getContext(), "Thêm sản phẩm thành công", Toast.LENGTH_SHORT).show();
                     loadData();
-                }else {
+                } else {
                     Toast.makeText(getContext(), "Thêm thất bại", Toast.LENGTH_SHORT).show();
                 }
 
@@ -265,12 +241,13 @@ public class fragmentSanPham extends Fragment {
         try {
             Date objNgay = format.parse(chuoi_ngay_vn);
             String chuoi_moi = (String) dateFormat.format("yyyy-MM-dd", objNgay);
-        } catch (ParseException e){
+        } catch (ParseException e) {
             e.printStackTrace();
         }
 
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
+
     }
 //    @Override
 //    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) { //Hàm khi người dùng đồng ý
@@ -298,7 +275,6 @@ public class fragmentSanPham extends Fragment {
 //    }
 
 
-
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         if (requestCode == REQUEST_CODE_CAMERA && resultCode == RESULT_OK && data != null) {
@@ -317,16 +293,17 @@ public class fragmentSanPham extends Fragment {
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
+
     public ContentResolver getContentResolver() {
         throw new RuntimeException("Stub!");
     }
 
-    private ArrayList<HashMap<String, Object>> getDSLoaiSach(){
+    private ArrayList<HashMap<String, Object>> getDSLoaiSach() {
         LoaiGiayDAO loaiGiayDAO = new LoaiGiayDAO(getContext());
         ArrayList<LoaiGiay> list = loaiGiayDAO.getDSLoaiGiay();
         ArrayList<HashMap<String, Object>> listHM = new ArrayList<>();
 
-        for (LoaiGiay loai: list){
+        for (LoaiGiay loai : list) {
             HashMap<String, Object> hs = new HashMap<>();
             hs.put("maLoai", loai.getMaLoai());
             hs.put("tenLoai", loai.getTenLoai());
@@ -335,7 +312,7 @@ public class fragmentSanPham extends Fragment {
         return listHM;
     }
 
-    void showDialogDate(){
+    void showDialogDate() {
         // sử dụng đối tượng lịch (calendar) để cài đặt
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(System.currentTimeMillis());
@@ -351,19 +328,20 @@ public class fragmentSanPham extends Fragment {
                         int ngay = i2;
 
                         //gắn dữ liệu vào Edittext
-                        edtNgayNhapSP.getEditText().setText(ngay +"/" + (thang +1) + "/" + nam);
+                        edtNgayNhapSP.getEditText().setText(ngay + "/" + (thang + 1) + "/" + nam);
                     }
                 },
                 calendar.get(Calendar.YEAR),
                 calendar.get(Calendar.MONTH),
                 calendar.get(Calendar.DATE)
-        ); dialog.show();
+        );
+        dialog.show();
     }
 
-    private void showDialogChiTiet(SanPham sanPham){
+    private void showDialogChiTiet(SanPham sanPham) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-        LayoutInflater layoutInflater = ((Activity)getContext()).getLayoutInflater();
-        View view = layoutInflater.inflate(R.layout.dialog_showchitiet, null );
+        LayoutInflater layoutInflater = ((Activity) getContext()).getLayoutInflater();
+        View view = layoutInflater.inflate(R.layout.dialog_showchitiet, null);
         builder.setView(view);
 
         //Ánh xạ
@@ -375,18 +353,18 @@ public class fragmentSanPham extends Fragment {
         TextView txtNgayNhapSP = view.findViewById(R.id.txtNgayNhapSPChiTiet);
         ImageView imgHinh = view.findViewById(R.id.imgHinh);
         byte[] hinhAnh = sanPham.getHinhAnh();
-        Bitmap bitmap = BitmapFactory.decodeByteArray(hinhAnh, 0 , hinhAnh.length);
+        Bitmap bitmap = BitmapFactory.decodeByteArray(hinhAnh, 0, hinhAnh.length);
         imgHinh.setImageBitmap(bitmap);
         ImageView imgEdit = view.findViewById(R.id.ivEdit);
 
         //sự kiện Edit
 
-        txtMaSP.setText("Mã sản phẩm: "+sanPham.getMaSP());
+        txtMaSP.setText("Mã sản phẩm: " + sanPham.getMaSP());
         txtTenSP.setText(sanPham.getTenSP());
         txtTenLoaiSP.setText("Loại: " + sanPham.getTenLoai());
         txtSoLuongSP.setText("Số lượng: " + sanPham.getSoLuong());
-        txtGiaNhapSP.setText("Giá nhập: "+ sanPham.getGiaNhap());
-        txtNgayNhapSP.setText("Ngày nhập: "+sanPham.getNgayNhap());
+        txtGiaNhapSP.setText("Giá nhập: " + sanPham.getGiaNhap());
+        txtNgayNhapSP.setText("Ngày nhập: " + sanPham.getNgayNhap());
 
         builder.setPositiveButton("Đóng", new DialogInterface.OnClickListener() {
             @Override
@@ -404,7 +382,7 @@ public class fragmentSanPham extends Fragment {
         });
     }
 
-    private void showDialogEdit(){
+    private void showDialogEdit() {
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         LayoutInflater inflater = getLayoutInflater();
         View view = inflater.inflate(R.layout.dialog_editsanpham, null);
@@ -481,14 +459,14 @@ public class fragmentSanPham extends Fragment {
                 String ngaynhap = edtNgayNhapSP.getEditText().getText().toString();
 
                 //chuyển data imageview sang mảng byte[]
-                BitmapDrawable bitmapDrawable= (BitmapDrawable) imgHinh.getDrawable();
+                BitmapDrawable bitmapDrawable = (BitmapDrawable) imgHinh.getDrawable();
                 Bitmap bitmap = bitmapDrawable.getBitmap();
                 ByteArrayOutputStream byteArray = new ByteArrayOutputStream();
                 bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArray); //ép kiểu ảnh về png, độ phân giải ảnh mặc định 100 - cảng nhỏ hơn càng nét(1-100), dữ liệu truyền vào;
                 byte[] hinhAnh = byteArray.toByteArray(); //mảng byte để chứa dữ liệu
 
                 SanPham sanPham = new SanPham(masp, maloai, tensp, gianhap, soluong, ngaynhap, hinhAnh);
-                if (sanPhamDAO.capNhatSanPham(sanPham)){
+                if (sanPhamDAO.capNhatSanPham(sanPham)) {
                     loadData();
                 }
 
@@ -518,11 +496,85 @@ public class fragmentSanPham extends Fragment {
         try {
             Date objNgay = format.parse(chuoi_ngay_vn);
             String chuoi_moi = (String) dateFormat.format("yyyy-MM-dd", objNgay);
-        } catch (ParseException e){
+        } catch (ParseException e) {
             e.printStackTrace();
         }
 
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
+    }
+
+    private void showDialogSize() {
+        sizeGiayDAO = new SizeGiayDAO(getContext());
+        List<Size> selectItemSize = sizeGiayDAO.getAll();
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        String[] sizes = new String[selectItemSize.size()];
+        List<String> strSize = Arrays.asList(sizes);
+        Boolean[] sizeBool = new Boolean[sizes.length];
+
+        for (int i = 0; i < selectItemSize.size(); i++) {
+            sizes[i] = (selectItemSize.get(i).size);
+        }
+        builder.setTitle("Chọn Size").setMultiChoiceItems(sizes, null, new DialogInterface.OnMultiChoiceClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i, boolean b) {
+                sizeBool[i] =  b;
+            }
+        });
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                for (int j = 0; j < sizeBool.length; j++) {
+                    boolean checked = sizeBool[j];
+                    if (checked){
+                        txtSize.setText(txtSize.getText()+ "\t"+ strSize.get(j));
+                    }
+                }
+            }
+        });
+        builder.setNegativeButton("Hủy", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+            }
+        });
+       builder.create().show();
+    }
+
+    private void showDialogMau() {
+        mauSacDAO = new MauSacDAO(getContext());
+        List<MauSac> selectItemMau = mauSacDAO.getAll();
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        String[] maus = new String[selectItemMau.size()];
+        List<String> strMau = Arrays.asList(maus);
+        Boolean[] mauBool = new Boolean[maus.length];
+
+        for (int i = 0; i < selectItemMau.size(); i++) {
+            maus[i] = (selectItemMau.get(i).tenMau);
+        }
+        builder.setTitle("Chọn Màu").setMultiChoiceItems(maus, null, new DialogInterface.OnMultiChoiceClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i, boolean b) {
+                mauBool[i] =  b;
+            }
+        });
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                for (int j = 0; j < mauBool.length; j++) {
+                    boolean checked = mauBool[j];
+                    if (checked){
+                        txtMau.setText(txtMau.getText()+ "\t"+ strMau.get(j));
+                    }
+                }
+            }
+        });
+        builder.setNegativeButton("Hủy", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+            }
+        });
+        builder.create().show();
     }
 }

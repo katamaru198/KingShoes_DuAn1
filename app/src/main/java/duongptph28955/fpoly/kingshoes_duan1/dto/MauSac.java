@@ -2,11 +2,7 @@ package duongptph28955.fpoly.kingshoes_duan1.dto;
 
 public class MauSac {
     public int maMau;
-
-
     public String tenMau;
-
-
 
     public MauSac() {
     }
