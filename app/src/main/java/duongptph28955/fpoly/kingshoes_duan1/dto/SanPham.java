@@ -8,36 +8,8 @@ public class SanPham {
     private int giaNhap ;
     private int soLuong;
     private String ngayNhap;
-    private int maMau;
-    private int maSize;
-    private byte[] hinhAnh;
-
-    public SanPham() {
-    }
-
-    public SanPham(int maSP, int maLoai, String tenLoai, String tenSP, int giaNhap, int soLuong, String ngayNhap, int maMau, int maSize, byte[] hinhAnh) {
-        this.maSP = maSP;
-        this.maLoai = maLoai;
-        this.tenLoai = tenLoai;
-        this.tenSP = tenSP;
-        this.giaNhap = giaNhap;
-        this.soLuong = soLuong;
-        this.ngayNhap = ngayNhap;
-        this.maMau = maMau;
-        this.maSize =maSize;
-        this.hinhAnh = hinhAnh;
-    }
-
-    public SanPham(int maSP, int maLoai, String tenSP, int giaNhap, int soLuong, String ngayNhap, byte[] hinhAnh) {
-        this.maSP = maSP;
-        this.maLoai = maLoai;
-        this.tenSP = tenSP;
-        this.giaNhap = giaNhap;
-        this.soLuong = soLuong;
-        this.ngayNhap = ngayNhap;
-        this.hinhAnh = hinhAnh;
-    }
-
+    private String tenMau;
+    private String tenSize;
 
     public int getMaSP() {
         return maSP;
@@ -71,22 +43,6 @@ public class SanPham {
         this.tenSP = tenSP;
     }
 
-    public int getMaMau() {
-        return maMau;
-    }
-
-    public void setMaMau(int maMau) {
-        this.maMau = maMau;
-    }
-
-    public int getMaSize() {
-        return maSize;
-    }
-
-    public void setMaSize(int maSize) {
-        this.maSize = maSize;
-    }
-
     public int getGiaNhap() {
         return giaNhap;
     }
@@ -111,6 +67,22 @@ public class SanPham {
         this.ngayNhap = ngayNhap;
     }
 
+    public String getTenMau() {
+        return tenMau;
+    }
+
+    public void setTenMau(String tenMau) {
+        this.tenMau = tenMau;
+    }
+
+    public String getTenSize() {
+        return tenSize;
+    }
+
+    public void setTenSize(String tenSize) {
+        this.tenSize = tenSize;
+    }
+
     public byte[] getHinhAnh() {
         return hinhAnh;
     }
@@ -118,4 +90,35 @@ public class SanPham {
     public void setHinhAnh(byte[] hinhAnh) {
         this.hinhAnh = hinhAnh;
     }
+
+    private byte[] hinhAnh;
+
+    public SanPham() {
+    }
+
+    public SanPham(int maSP, int maLoai, String tenLoai, String tenSP, int giaNhap, int soLuong, String ngayNhap, String tenMau, String tenSize, byte[] hinhAnh) {
+        this.maSP = maSP;
+        this.maLoai = maLoai;
+        this.tenLoai = tenLoai;
+        this.tenSP = tenSP;
+        this.giaNhap = giaNhap;
+        this.soLuong = soLuong;
+        this.ngayNhap = ngayNhap;
+        this.tenMau = tenMau;
+        this.tenSize = tenSize;
+        this.hinhAnh = hinhAnh;
+    }
+
+    public SanPham(int maSP, int maLoai, String tenSP, int giaNhap, int soLuong, String ngayNhap, byte[] hinhAnh) {
+        this.maSP = maSP;
+        this.maLoai = maLoai;
+        this.tenSP = tenSP;
+        this.giaNhap = giaNhap;
+        this.soLuong = soLuong;
+        this.ngayNhap = ngayNhap;
+        this.hinhAnh = hinhAnh;
+    }
+
+
+
 }
