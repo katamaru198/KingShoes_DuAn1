@@ -4,27 +4,26 @@ public class HoaDon {
     public int maHD;
     public int maSP;
     public int maKH;
-    public int maMau;
-    public int maSize;
+    public String tenMau;
+    public String size;
     public int trangThai;
     public int giaXuat;
     public String ngayXuat;
     public int soLuongXuat;
 
-
-    public HoaDon() {
-    }
-
-    public HoaDon(int maHD, int maSP, int maKH, int maMau, int maSize, int trangThai, int giaXuat, String ngayXuat, int soLuongXuat) {
+    public HoaDon(int maHD, int maSP, int maKH, String tenMau, String size, int trangThai, int giaXuat, String ngayXuat, int soLuongXuat) {
         this.maHD = maHD;
         this.maSP = maSP;
         this.maKH = maKH;
-        this.maMau = maMau;
-        this.maSize = maSize;
+        this.tenMau = tenMau;
+        this.size = size;
         this.trangThai = trangThai;
         this.giaXuat = giaXuat;
         this.ngayXuat = ngayXuat;
         this.soLuongXuat = soLuongXuat;
+    }
+
+    public HoaDon() {
     }
 
     public int getMaHD() {
@@ -51,20 +50,20 @@ public class HoaDon {
         this.maKH = maKH;
     }
 
-    public int getMaMau() {
-        return maMau;
+    public String getTenMau() {
+        return tenMau;
     }
 
-    public void setMaMau(int maMau) {
-        this.maMau = maMau;
+    public void setTenMau(String tenMau) {
+        this.tenMau = tenMau;
     }
 
-    public int getMaSize() {
-        return maSize;
+    public String getSize() {
+        return size;
     }
 
-    public void setMaSize(int maSize) {
-        this.maSize = maSize;
+    public void setSize(String size) {
+        this.size = size;
     }
 
     public int getTrangThai() {
