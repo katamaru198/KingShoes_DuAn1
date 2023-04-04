@@ -21,6 +21,7 @@ import duongptph28955.fpoly.kingshoes_duan1.fragment.fragmentLoaiGiay;
 import duongptph28955.fpoly.kingshoes_duan1.fragment.fragmentMauSac;
 import duongptph28955.fpoly.kingshoes_duan1.fragment.fragmentSanPham;
 import duongptph28955.fpoly.kingshoes_duan1.fragment.fragmentSizeGiay;
+import duongptph28955.fpoly.kingshoes_duan1.fragment.fragment_HoaDon;
 import duongptph28955.fpoly.kingshoes_duan1.fragment.themTaiKhoan_Fragment;
 
 public class MainActivity extends AppCompatActivity {
@@ -68,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
                         fragment = new FragmentKhachHang();
                         break;
                     case R.id.action_HoaDon:
-
+                        fragment = new fragment_HoaDon();
                         break;
                     case R.id.action_top10:
 

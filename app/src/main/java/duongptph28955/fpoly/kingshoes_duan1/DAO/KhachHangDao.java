@@ -11,7 +11,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import duongptph28955.fpoly.kingshoes_duan1.DBHelper.DBHelper;
+import duongptph28955.fpoly.kingshoes_duan1.dto.HoaDon;
 import duongptph28955.fpoly.kingshoes_duan1.dto.KhachHang;
+import duongptph28955.fpoly.kingshoes_duan1.dto.SanPham;
 
 public class KhachHangDao {
     SQLiteDatabase db;
@@ -60,5 +62,11 @@ public class KhachHangDao {
             list.add(obj);
         }
         return list;
+    }
+
+    public KhachHang getID(String id){
+        String sql = "select * from KHACHHANG where maKhachHang=?";
+        List<KhachHang> list = getData(sql, id);
+        return list.get(0);
     }
 }

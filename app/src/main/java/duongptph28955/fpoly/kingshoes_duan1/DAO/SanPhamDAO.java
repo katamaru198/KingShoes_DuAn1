@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import duongptph28955.fpoly.kingshoes_duan1.DBHelper.DBHelper;
+import duongptph28955.fpoly.kingshoes_duan1.dto.MauSac;
 import duongptph28955.fpoly.kingshoes_duan1.dto.SanPham;
 
 public class SanPhamDAO {
@@ -74,11 +75,12 @@ public class SanPhamDAO {
             SanPham obj = new SanPham();
             obj.maSP = Integer.parseInt(c.getString( c.getColumnIndex("maSanPham")));
             obj.tenSP = c.getString( c.getColumnIndex("tenSanPham"));
+            obj.setTenMau(c.getString(c.getColumnIndex("tenMau")));
+            obj.setTenSize(c.getString(c.getColumnIndex("tenSize")));
             list.add(obj);
         }
         return list;
     }
-
 
     public SanPham getID(String id){
         String sql = "select * from SANPHAM where maSanPham=?";
