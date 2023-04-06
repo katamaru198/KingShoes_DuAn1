@@ -109,13 +109,15 @@ public class SanPham {
         this.hinhAnh = hinhAnh;
     }
 
-    public SanPham(int maSP, int maLoai, String tenSP, int giaNhap, int soLuong, String ngayNhap, byte[] hinhAnh) {
+    public SanPham(int maSP, int maLoai,  String tenSP, int giaNhap, int soLuong, String ngayNhap, String tenMau, String tenSize, byte[] hinhAnh) {
         this.maSP = maSP;
         this.maLoai = maLoai;
         this.tenSP = tenSP;
         this.giaNhap = giaNhap;
         this.soLuong = soLuong;
         this.ngayNhap = ngayNhap;
+        this.tenMau = tenMau;
+        this.tenSize = tenSize;
         this.hinhAnh = hinhAnh;
     }
 
