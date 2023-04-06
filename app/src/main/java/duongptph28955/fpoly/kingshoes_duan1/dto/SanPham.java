@@ -10,6 +10,22 @@ public class SanPham {
     private String ngayNhap;
     private String tenMau;
     private String tenSize;
+    private int soluongdaban;
+
+    public SanPham(int maSP, String tenSP, int soluongdaban, byte[] hinhAnh) {
+        this.maSP = maSP;
+        this.tenSP = tenSP;
+        this.soluongdaban = soluongdaban;
+        this.hinhAnh = hinhAnh;
+    }
+
+    public int getSoluongdaban() {
+        return soluongdaban;
+    }
+
+    public void setSoluongdaban(int soluongdaban) {
+        this.soluongdaban = soluongdaban;
+    }
 
     public int getMaSP() {
         return maSP;
