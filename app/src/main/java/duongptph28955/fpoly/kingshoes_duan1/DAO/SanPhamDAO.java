@@ -56,6 +56,8 @@ public class SanPhamDAO {
         ContentValues contentValues = new ContentValues();
         contentValues.put("tenSanPham", sanPham.getTenSP());
         contentValues.put("maLoai", sanPham.getMaLoai());
+        contentValues.put("tenMau", sanPham.getTenMau());
+        contentValues.put("tenSize", sanPham.getTenSize());
         contentValues.put("giaNhap", sanPham.getGiaNhap());
         contentValues.put("soLuong", sanPham.getSoLuong());
         contentValues.put("ngayNhap", sanPham.getNgayNhap());
@@ -102,15 +104,15 @@ public class SanPhamDAO {
 //    }
     // boolean true: xóa thành công; false: thất bại
     //int 1: xóa thành công ; 0: thất bại ; -1: tìm thấy sản phẩm có trong hóa đơn
-//    public int xoaSanPham(int masp){
-//        SQLiteDatabase sqLiteDatabase = dbHelper.getWritableDatabase();
-//        Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM HOADON WHERE maSanPham = ?", new String[]{String.valueOf(masp)});
-//        if (cursor.getCount() !=0){
-//            return -1;
-//        }
-//        long check = sqLiteDatabase.delete("SANPHAM", "maSanPham = ?", new String[]{String.valueOf(masp)});
-//        if (check == -1)
-//            return 0;
-//        return 1;
-//    }
+    public int xoaSanPham(int masp){
+        SQLiteDatabase sqLiteDatabase = dbHelper.getWritableDatabase();
+        Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM HOADON WHERE maSanPham = ?", new String[]{String.valueOf(masp)});
+        if (cursor.getCount() !=0){
+            return -1;
+        }
+        long check = sqLiteDatabase.delete("SANPHAM", "maSanPham = ?", new String[]{String.valueOf(masp)});
+        if (check == -1)
+            return 0;
+        return 1;
+    }
 }
