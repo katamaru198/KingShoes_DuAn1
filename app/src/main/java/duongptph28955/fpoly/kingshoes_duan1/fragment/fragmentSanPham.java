@@ -64,23 +64,14 @@ import duongptph28955.fpoly.kingshoes_duan1.dto.Size;
 public class fragmentSanPham extends Fragment {
     ImageButton ibtnCamera, ibtnFolder;
     ImageView imgHinh;
-
     final int REQUEST_CODE_CAMERA = 123;
     final int REQUEST_CODE_FOLDER = 456;
-
     RecyclerView recyclerSanPham;
     SanPhamDAO sanPhamDAO;
     TextInputLayout edtNgayNhapSP;
-
-    int masp, maMau, maSize;
-
-    ArrayList<Size> listSize;
-
+    int masp;
     SizeGiayDAO sizeGiayDAO;
-
     MauSacDAO mauSacDAO;
-
-    ArrayList<MauSac> listmau;
     TextView txtSize, txtMau;
 
 
@@ -318,14 +309,12 @@ public class fragmentSanPham extends Fragment {
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(System.currentTimeMillis());
 
-        // Khởi tạo dialog ngày tháng
-        //DatePickerDialog(@android.annotation.NonNull android.content.Context context, @android.annotation.Nullable android.app.DatePickerDialog.OnDateSetListener listener, int year, int month, int dayOfMonth)
         DatePickerDialog dialog = new DatePickerDialog(getContext(),
                 new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
                         int nam = i;
-                        int thang = i1; // Nhận giá trị từ 0 ==> 11
+                        int thang = i1;
                         int ngay = i2;
 
                         //gắn dữ liệu vào Edittext
@@ -352,11 +341,14 @@ public class fragmentSanPham extends Fragment {
         TextView txtSoLuongSP = view.findViewById(R.id.txtSoLuongSPChiTiet);
         TextView txtGiaNhapSP = view.findViewById(R.id.txtGiaNhapSPChiTiet);
         TextView txtNgayNhapSP = view.findViewById(R.id.txtNgayNhapSPChiTiet);
+        TextView txtTenMauSP = view.findViewById(R.id.txtTenMauSPChiTiet);
+        TextView txtTenSizeSP = view.findViewById(R.id.txtTenSizeSPChiTiet);
         ImageView imgHinh = view.findViewById(R.id.imgHinh);
         byte[] hinhAnh = sanPham.getHinhAnh();
         Bitmap bitmap = BitmapFactory.decodeByteArray(hinhAnh, 0, hinhAnh.length);
         imgHinh.setImageBitmap(bitmap);
         ImageView imgEdit = view.findViewById(R.id.ivEdit);
+        ImageView imgDel = view.findViewById(R.id.ivDel);
 
         //sự kiện Edit
 
@@ -366,6 +358,8 @@ public class fragmentSanPham extends Fragment {
         txtSoLuongSP.setText("Số lượng: " + sanPham.getSoLuong());
         txtGiaNhapSP.setText("Giá nhập: " + sanPham.getGiaNhap());
         txtNgayNhapSP.setText("Ngày nhập: " + sanPham.getNgayNhap());
+        txtTenMauSP.setText("Màu: "+ sanPham.getTenMau());
+        txtTenSizeSP.setText("Size: " + sanPham.getTenSize());
 
         builder.setPositiveButton("Đóng", new DialogInterface.OnClickListener() {
             @Override
@@ -381,6 +375,37 @@ public class fragmentSanPham extends Fragment {
                 alertDialog.dismiss();
             }
         });
+        imgDel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                masp = sanPham.getMaSP();
+                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                builder.setTitle("XÓA SẢN PHẨM");
+                builder.setMessage("Bạn có chắc chắn muốn xóa không?");
+                builder.setNegativeButton("Đồng ý", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        int check = sanPhamDAO.xoaSanPham(masp);
+                        if (check == 1){
+                            Toast.makeText(getContext(), "Xóa sản phẩm thành công", Toast.LENGTH_SHORT).show();
+                            loadData();
+                        }else if (check == 0){
+                            Toast.makeText(getContext(), "Xóa thất bại", Toast.LENGTH_SHORT).show();
+                        }else if (check == -1){
+                            Toast.makeText(getContext(), "SẢN PHẨM tồn tại trong HÓA ĐƠN, không được phép xóa", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+                builder.setPositiveButton("Hủy", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                    }
+                });
+                alertDialog.dismiss();
+                builder.create().show();
+            }
+        });
+
     }
 
     private void showDialogEdit() {
@@ -393,6 +418,9 @@ public class fragmentSanPham extends Fragment {
         TextInputLayout edtTenSP = view.findViewById(R.id.edtTenSanPhamDia);
         TextInputLayout edtGiaNhapSP = view.findViewById(R.id.edtGiaNhapDia);
         TextInputLayout edtSoLuongSP = view.findViewById(R.id.edtSoLuongDia);
+        txtSize = view.findViewById(R.id.txtSize);
+        txtMau = view.findViewById(R.id.txtMau);
+
         edtNgayNhapSP = view.findViewById(R.id.edtNgayNhapDia);
         edtNgayNhapSP.setEndIconOnClickListener(new View.OnClickListener() {
             @Override
@@ -449,6 +477,18 @@ public class fragmentSanPham extends Fragment {
                 startActivityForResult(intent, REQUEST_CODE_FOLDER);
             }
         });
+        view.findViewById(R.id.btnSIZE).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showDialogSize();
+            }
+        });
+        view.findViewById(R.id.btnMAU).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showDialogMau();
+            }
+        });
         builder.setNegativeButton("Chỉnh sửa", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
@@ -458,6 +498,8 @@ public class fragmentSanPham extends Fragment {
                 int gianhap = Integer.parseInt(edtGiaNhapSP.getEditText().getText().toString());
                 int soluong = Integer.parseInt(edtSoLuongSP.getEditText().getText().toString());
                 String ngaynhap = edtNgayNhapSP.getEditText().getText().toString();
+                String mau = txtMau.getText().toString();
+                String size = txtSize.getText().toString();
 
                 //chuyển data imageview sang mảng byte[]
                 BitmapDrawable bitmapDrawable = (BitmapDrawable) imgHinh.getDrawable();
@@ -466,7 +508,7 @@ public class fragmentSanPham extends Fragment {
                 bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArray); //ép kiểu ảnh về png, độ phân giải ảnh mặc định 100 - cảng nhỏ hơn càng nét(1-100), dữ liệu truyền vào;
                 byte[] hinhAnh = byteArray.toByteArray(); //mảng byte để chứa dữ liệu
 
-                SanPham sanPham = new SanPham(masp, maloai, tensp, gianhap, soluong, ngaynhap, hinhAnh);
+                SanPham sanPham = new SanPham(masp, maloai, tensp, gianhap, soluong, ngaynhap,mau, size, hinhAnh);
                 if (sanPhamDAO.capNhatSanPham(sanPham)) {
                     loadData();
                 }
@@ -479,6 +521,8 @@ public class fragmentSanPham extends Fragment {
             public void onClick(DialogInterface dialogInterface, int i) {
             }
         });
+
+
 
         //Chuyển đổi định dạng ngày tháng
         //1. Lấy ngày hiện tại của hệ thông

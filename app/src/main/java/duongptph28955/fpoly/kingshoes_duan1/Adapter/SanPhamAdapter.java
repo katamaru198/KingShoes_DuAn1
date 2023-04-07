@@ -38,6 +38,7 @@ public class SanPhamAdapter extends RecyclerView.Adapter<SanPhamAdapter.ViewHold
         this.itemClickListener = itemClickListener;
     }
 
+
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -83,8 +84,6 @@ public class SanPhamAdapter extends RecyclerView.Adapter<SanPhamAdapter.ViewHold
             txtTenLoaiSP = itemView.findViewById(R.id.txtTenLoaiSP);
 
             imgHinhSP = itemView.findViewById(R.id.imgHinhSP);
-
-
         }
     }
 
