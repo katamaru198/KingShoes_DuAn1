@@ -1,11 +1,8 @@
 package duongptph28955.fpoly.kingshoes_duan1.DAO;
-
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-
 import java.util.ArrayList;
-
 import duongptph28955.fpoly.kingshoes_duan1.DBHelper.DBHelper;
 import duongptph28955.fpoly.kingshoes_duan1.dto.SanPham;
 

@@ -35,6 +35,7 @@ public class FragmentTop10 extends Fragment {
         Top10Adapter adapter = new Top10Adapter(getContext(), list);
         recyclerTop10.setAdapter(adapter);
 
+
         return view;
     }
 }

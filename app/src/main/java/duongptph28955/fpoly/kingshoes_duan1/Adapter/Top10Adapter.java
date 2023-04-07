@@ -58,9 +58,11 @@ public class Top10Adapter extends RecyclerView.Adapter<Top10Adapter.ViewHoler>{
         ImageView imgHinhTop10;
         public ViewHoler(@NonNull View itemView) {
             super(itemView);
+
             txtTenSanPham = itemView.findViewById(R.id.txtTenSanPham);
             txtSoLuong = itemView.findViewById(R.id.txtSoLuong);
             imgHinhTop10 = itemView.findViewById(R.id.hinhTop10);
+
         }
     }
 }
