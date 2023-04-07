@@ -17,7 +17,11 @@ import com.google.android.material.navigation.NavigationView;
 
 import duongptph28955.fpoly.kingshoes_duan1.fragment.FragmentDoiMatKhau;
 import duongptph28955.fpoly.kingshoes_duan1.fragment.FragmentKhachHang;
+
+import duongptph28955.fpoly.kingshoes_duan1.fragment.fragmentDoanhThu;
+=======
 import duongptph28955.fpoly.kingshoes_duan1.fragment.FragmentTop10;
+
 import duongptph28955.fpoly.kingshoes_duan1.fragment.fragmentLoaiGiay;
 import duongptph28955.fpoly.kingshoes_duan1.fragment.fragmentMauSac;
 import duongptph28955.fpoly.kingshoes_duan1.fragment.fragmentSanPham;
@@ -76,6 +80,7 @@ public class MainActivity extends AppCompatActivity {
                         fragment = new FragmentTop10();
                         break;
                     case R.id.action_doanhThu:
+                            fragment = new fragmentDoanhThu();
 
                         break;
                     case R.id.action_themTaiKhoan:

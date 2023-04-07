@@ -4,18 +4,13 @@
     android:layout_height="170dp"
     android:orientation="vertical"
     android:padding="16dp"
-    android:background="#00B8D4">
+    android:background="@drawable/header_layout">
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_header"/>
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Dương Phan"/>
-    <TextView
-        android:text="duongptph28955@fpt.edu.vn"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:src="@drawable/ic_header"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="110dp"/>
+
 
 </LinearLayout>
