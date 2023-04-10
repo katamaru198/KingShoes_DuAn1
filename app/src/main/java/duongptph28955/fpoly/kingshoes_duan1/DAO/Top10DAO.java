@@ -16,7 +16,7 @@ public class Top10DAO {
     public ArrayList<SanPham> getTop10(){
         ArrayList<SanPham> list = new ArrayList<>();
         SQLiteDatabase sqLiteDatabase = dbHelper.getReadableDatabase();
-        Cursor cursor = sqLiteDatabase.rawQuery("SELECT hd.maSanPham, sp.tenSanPham, SUM(hd.soLuongXuat), sp.hinhAnh FROM HOADON hd, SANPHAM sp WHERE hd.maSanPham = sp.maSanPham GROUP by hd.maSanPham, sp.tenSanPham HAVING SUM(hd.soLuongXuat) ORDER BY SUM(sp.soLuong) DESC LIMIT 10", null);
+        Cursor cursor = sqLiteDatabase.rawQuery("SELECT hd.maSanPham, sp.tenSanPham, COUNT(hd.maHoaDon), sp.hinhAnh FROM HOADON hd, SANPHAM sp WHERE hd.maSanPham = sp.maSanPham GROUP by hd.maSanPham, sp.tenSanPham HAVING COUNT(hd.maHoaDon) ORDER BY SUM(sp.soLuong) DESC LIMIT 10", null);
         if (cursor.getCount()!=0){
             cursor.moveToFirst();
             do {

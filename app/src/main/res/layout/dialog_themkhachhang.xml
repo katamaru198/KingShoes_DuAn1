@@ -3,7 +3,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="#9EDCBC"
     android:orientation="vertical">
 
     <LinearLayout
@@ -39,15 +38,6 @@
         </LinearLayout>
     </LinearLayout>
 
-    <EditText
-        android:id="@+id/edMaKhachHang"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Mã Khách Hàng"
-        android:layout_marginTop="50dp"
-        android:layout_marginBottom="20dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"/>
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/edttenkhachhang"
         android:layout_width="match_parent"
@@ -103,7 +93,7 @@
 
             android:layout_marginHorizontal="20dp"
             android:layout_weight="1"
-            android:backgroundTint="#2196F3"/>
+            android:backgroundTint="#FFA500"/>
         <Button
             android:id="@+id/btnCancelKhachHang"
             android:layout_width="wrap_content"
@@ -112,6 +102,6 @@
 
             android:layout_marginHorizontal="20dp"
             android:layout_weight="1"
-            android:backgroundTint="#2196F3"/>
+            android:backgroundTint="#FFA500"/>
     </LinearLayout>
 </LinearLayout>

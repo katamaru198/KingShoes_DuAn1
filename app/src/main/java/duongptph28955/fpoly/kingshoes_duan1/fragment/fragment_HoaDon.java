@@ -225,8 +225,11 @@ public class fragment_HoaDon extends Fragment {
                 item = new HoaDon();
                 item.setMaSP(maSP);
                 item.setMaKH(maKH);
-                item.setGiaXuat(Integer.parseInt(edGiaXuat.getEditText().getText().toString()));
-                item.setSoLuongXuat(Integer.parseInt(edSoLuongXuat.getEditText().getText().toString()));
+                try {
+                    item.setGiaXuat(Integer.parseInt(edGiaXuat.getEditText().getText().toString()));
+                } catch (Exception e){
+                    e.getStackTrace();
+                }
                 item.setNgayXuat(edNgayXuat.getEditText().getText().toString());
                 item.setTenMau(edMau.getText().toString());
                 item.size = (edSize.getText().toString());
@@ -235,12 +238,16 @@ public class fragment_HoaDon extends Fragment {
                 } else {
                     item.trangThai = 1;
                 }
-                if (dao.insertHoaDon(item)>0){
-                    Toast.makeText(ct, "Thêm thành công", Toast.LENGTH_SHORT).show();
-                    capNhatLV();
-                    dialog.dismiss();
+                if (edSize.getText().toString().isEmpty()||edMau.getText().toString().isEmpty()||edGiaXuat.getEditText().getText().toString().isEmpty()||edNgayXuat.getEditText().getText().toString().isEmpty()){
+                    Toast.makeText(ct, "Vui lòng nhập đầy đủ thông tin", Toast.LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(ct, "Thêm thất bại", Toast.LENGTH_SHORT).show();
+                    if (dao.insertHoaDon(item)>0){
+                        Toast.makeText(ct, "Thêm thành công", Toast.LENGTH_SHORT).show();
+                        capNhatLV();
+                        dialog.dismiss();
+                    } else {
+                        Toast.makeText(ct, "Thêm thất bại", Toast.LENGTH_SHORT).show();
+                    }
                 }
 
             }

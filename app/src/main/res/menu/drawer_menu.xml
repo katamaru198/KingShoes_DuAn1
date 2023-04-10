@@ -5,10 +5,6 @@
         android:icon="@drawable/ic_category_24"
         android:title="Quản lý loại giày"/>
     <item
-        android:id="@+id/action_Giay"
-        android:icon="@drawable/ic_shoe"
-        android:title="Quản lý giày"/>
-    <item
         android:id="@+id/action_mauSac"
         android:icon="@drawable/baseline_color_lens_24"
         android:title="Quản lý màu sắc"/>
@@ -16,6 +12,10 @@
         android:id="@+id/action_size"
         android:icon="@drawable/ic_size"
         android:title="Quản lý size"/>
+    <item
+        android:id="@+id/action_Giay"
+        android:icon="@drawable/ic_shoe"
+        android:title="Quản lý giày"/>
     <item
         android:id="@+id/action_khachHang"
         android:icon="@drawable/ic_khachhang"

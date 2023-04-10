@@ -32,7 +32,6 @@ public class FragmentKhachHang extends Fragment {
     ListView listView ;
     FloatingActionButton fab;
     Dialog dialog;
-    EditText edMakhachhang;
     TextInputLayout edTenKhachHang,edSoDienThoai,edDiaChi;
     Button btn_LuuKhachHang,btn_Huy;
     static KhachHangDao dao;
@@ -71,7 +70,6 @@ public class FragmentKhachHang extends Fragment {
     protected void ShowDialogKhachHang(final Context context,final int type){
         dialog = new Dialog(getContext());
         dialog.setContentView(R.layout.dialog_themkhachhang);
-        edMakhachhang =dialog.findViewById(R.id.edMaKhachHang);
         edTenKhachHang =dialog.findViewById(R.id.edttenkhachhang);
 
         edSoDienThoai =dialog.findViewById(R.id.edtsodienthoai);
@@ -80,11 +78,8 @@ public class FragmentKhachHang extends Fragment {
         btn_LuuKhachHang=dialog.findViewById(R.id.btnSaveKhachHang);
         btn_Huy=dialog.findViewById(R.id.btnCancelKhachHang);
 
-        edMakhachhang.setEnabled(false);
 
         if(type !=0){
-
-            edMakhachhang.setText(String.valueOf(item.getMaKH()));
             edTenKhachHang.getEditText().setText(item.tenKH);
             edSoDienThoai.getEditText().setText(item.soDTKH);
             edDiaChi.getEditText().setText(item.diaChiKH);
@@ -107,7 +102,6 @@ public class FragmentKhachHang extends Fragment {
 
                         }
                     }else{
-                        item.maKH=Integer.parseInt(edMakhachhang.getText().toString());
                         if (dao.updateKhachHang(item)>0){
                             Toast.makeText(context,"sửa khách hàng thành công",Toast.LENGTH_SHORT).show();
                         }else{

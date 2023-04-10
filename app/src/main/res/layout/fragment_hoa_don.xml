@@ -19,7 +19,7 @@
         android:layout_marginTop="10dp"
         android:layout_marginEnd="10dp"
         android:layout_marginBottom="10dp"
-        android:backgroundTint="#0036FB"
+        android:backgroundTint="#FACE9C"
         android:src="@drawable/ic_add" />
 
 </RelativeLayout>

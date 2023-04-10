@@ -89,13 +89,16 @@
         android:orientation="horizontal">
         <EditText
             android:id="@+id/edMau"
-            android:layout_width="250dp"
+            android:layout_width="220dp"
             android:layout_height="wrap_content" />
 
         <Button
             android:id="@+id/btn_chkMau"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:backgroundTint="#EE7600"
+            android:textColor="@color/white"
+
             android:text="MAU"/>
 
     </LinearLayout>
@@ -107,12 +110,14 @@
         android:orientation="horizontal">
         <EditText
             android:id="@+id/edSize"
-            android:layout_width="250dp"
+            android:layout_width="220dp"
             android:layout_height="wrap_content"/>
         <Button
             android:id="@+id/btn_chkSize"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:backgroundTint="#EE7600"
+            android:textColor="@color/white"
             android:text="SIZE"/>
     </LinearLayout>
 
@@ -137,12 +142,7 @@
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:layout_marginBottom="10dp"
-        android:hint="Số lượng">
-        <com.google.android.material.textfield.TextInputEditText
-            android:inputType="number"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-    </com.google.android.material.textfield.TextInputLayout>
+        android:hint="Số lượng"/>
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/edNgayXuat"
         app:endIconMode="custom"
@@ -155,7 +155,7 @@
         <com.google.android.material.textfield.TextInputEditText
             android:inputType="date"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"/>
     </com.google.android.material.textfield.TextInputLayout>
     <CheckBox
         android:id="@+id/chkTrangThai"

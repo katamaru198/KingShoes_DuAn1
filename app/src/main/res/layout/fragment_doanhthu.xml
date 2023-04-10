@@ -14,7 +14,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Từ Ngày"
-
+            android:backgroundTint="#EE7600"
             />
         <EditText
             android:id="@+id/ed_tuNgay"
@@ -34,7 +34,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Đến Ngày"
-
+            android:backgroundTint="#EE7600"
             />
         <EditText
             android:id="@+id/ed_denNgay"
@@ -50,6 +50,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginBottom="180dp"
+        android:backgroundTint="#EE7600"
         android:text="Thống kê"/>
 
     <TextView
