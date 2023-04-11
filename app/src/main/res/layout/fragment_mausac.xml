@@ -7,22 +7,11 @@
     android:layout_margin="10dp"
     tools:context=".fragment.fragmentMauSac">
 
-    <TextView
-        android:id="@+id/title"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="MÀU SẮC"
-        android:textSize="30dp"
-        android:textColor="#FF0606"
-        android:textStyle="bold"
-        android:gravity="center"/>
-
     <ListView
         android:id="@+id/lvMauSac"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/title"
-        android:layout_marginTop="22dp" />
+        android:layout_marginTop="10dp" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/floatSearchMauSac"
@@ -33,16 +22,19 @@
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="80dp"
         android:layout_marginRight="10dp"
-        android:backgroundTint="#0036FB"/>
+        android:backgroundTint="#FACE9C"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/floatAddMauSac"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_add"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_margin="10dp"
-        android:backgroundTint="#0036FB"/>
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
+        android:backgroundTint="#FACE9C"
+        android:src="@drawable/ic_add" />
 
 </RelativeLayout>

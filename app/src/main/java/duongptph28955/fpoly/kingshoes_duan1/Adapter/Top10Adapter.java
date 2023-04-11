@@ -39,8 +39,8 @@ public class Top10Adapter extends RecyclerView.Adapter<Top10Adapter.ViewHoler>{
 
     @Override
     public void onBindViewHolder(@NonNull ViewHoler holder, int position) {
-        holder.txtTenSanPham.setText(list.get(position).getTenSP());
-        holder.txtSoLuong.setText(String.valueOf(list.get(position).getSoluongdaban()));
+        holder.txtTenSanPham.setText("Tên sản phẩm: "+list.get(position).getTenSP());
+        holder.txtSoLuong.setText("Bán được : " + String.valueOf(list.get(position).getSoluongdaban()) + " đôi!");
 
         SanPham sanPham = list.get(position);
         byte[] hinhAnh = sanPham.getHinhAnh();

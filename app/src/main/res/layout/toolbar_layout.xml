@@ -5,7 +5,5 @@
     android:layout_width="match_parent"
     android:layout_height="?attr/actionBarSize"
     tools:context=".MainActivity"
-    android:background="@color/purple_500"
-    android:id="@+id/tool_bar">
-
-</androidx.appcompat.widget.Toolbar>
+    android:background="#FF6600	"
+    android:id="@+id/tool_bar"/>

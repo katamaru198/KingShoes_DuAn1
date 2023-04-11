@@ -13,4 +13,7 @@
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
     </style>
+    <style name="KingShoes" parent="Theme.KingShoes_DuAn1">
+        <item name="android:statusBarColor">#FF6600</item>
+    </style>
 </resources>

@@ -592,7 +592,7 @@ public class fragmentSanPham extends Fragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         String[] maus = new String[selectItemMau.size()];
         List<String> strMau = Arrays.asList(maus);
-        Boolean[] mauBool = new Boolean[maus.length];
+        Boolean[] mauBool = new Boolean[selectItemMau.size()];
 
         for (int i = 0; i < selectItemMau.size(); i++) {
             maus[i] = (selectItemMau.get(i).tenMau);

@@ -16,6 +16,7 @@
             android:name=".DangNhapActivity"
             android:exported="false" />
         <activity
+            android:theme="@style/KingShoes"
             android:name=".MainActivity"
             android:exported="false" />
         <activity

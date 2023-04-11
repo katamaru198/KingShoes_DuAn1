@@ -30,7 +30,6 @@ public class HoaDonDAO {
         values.put("trangThai", obj.trangThai);
         values.put("giaXuat", obj.giaXuat);
         values.put("ngayXuat", obj.ngayXuat);
-        values.put("soLuongXuat", obj.soLuongXuat);
         return db.insert("HOADON", null, values);
     }
 
@@ -47,7 +46,6 @@ public class HoaDonDAO {
         values.put("trangThai", obj.trangThai);
         values.put("giaXuat", obj.giaXuat);
         values.put("ngayXuat", obj.ngayXuat);
-        values.put("soLuongXuat", obj.soLuongXuat);
         return db.update("HOADON", values,"maHoaDon=?",new String[]{obj.getMaHD() + ""});
     }
 
@@ -64,7 +62,6 @@ public class HoaDonDAO {
             obj.size = c.getString( c.getColumnIndex("tenSize"));
             obj.trangThai = Integer.parseInt(c.getString(c.getColumnIndex("trangThai")));
             obj.giaXuat = Integer.parseInt(c.getString(c.getColumnIndex("giaXuat")));
-            obj.soLuongXuat = Integer.parseInt(c.getString(c.getColumnIndex("soLuongXuat")));
             obj.ngayXuat = c.getString(c.getColumnIndex("ngayXuat"));
             list.add(obj);
         }

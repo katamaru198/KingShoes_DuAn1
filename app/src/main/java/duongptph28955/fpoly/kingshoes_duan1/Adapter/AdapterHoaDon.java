@@ -1,8 +1,10 @@
 package duongptph28955.fpoly.kingshoes_duan1.Adapter;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -66,6 +68,7 @@ public class AdapterHoaDon extends ArrayAdapter<HoaDon> {
         this.fragment = fragment;
     }
 
+    @SuppressLint("ResourceAsColor")
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
@@ -85,7 +88,6 @@ public class AdapterHoaDon extends ArrayAdapter<HoaDon> {
             tvSize = v.findViewById(R.id.tvSize);
             tvNgayXuat = v.findViewById(R.id.tvNgayXuat);
             tvGiaXuat = v.findViewById(R.id.tvGiaXuat);
-            tvSoLuong =v.findViewById(R.id.tvSoLuongXuat);
             tvTrangThai = v.findViewById(R.id.tvTrangThai);
 
             SanPhamDAO sanPhamDAO = new SanPhamDAO(context);
@@ -97,12 +99,13 @@ public class AdapterHoaDon extends ArrayAdapter<HoaDon> {
             tvMau.setText("Màu: " + item.tenMau);
             tvSize.setText("Size: " + item.size);
             tvGiaXuat.setText("Giá: " + item.giaXuat);
-            tvSoLuong.setText("Số lượng: " + item.soLuongXuat);
             tvNgayXuat.setText("Ngày xuất: " + item.ngayXuat);
             if (item.trangThai == 1) {
                 tvTrangThai.setText("Đã thanh toán");
+                tvTrangThai.setTextColor(Color.rgb(0, 205, 0));
             } else {
                 tvTrangThai.setText("Chưa thanh toán");
+                tvTrangThai.setTextColor(Color.rgb(255, 48, 48));
             }
             v.findViewById(R.id.btnDeleteHD).setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -143,7 +146,6 @@ public class AdapterHoaDon extends ArrayAdapter<HoaDon> {
                     edSize = view.findViewById(R.id.edSizeNew);
                     edGia.getEditText().setText(item.giaXuat + "");
                     edNgay.getEditText().setText(item.ngayXuat);
-                    edSoLuong.getEditText().setText(item.soLuongXuat +"");
                     chkTrangThai = view.findViewById(R.id.chkTrangThaiNew);
                     edMau.setText(item.tenMau);
                     edSize.setText(item.size);
@@ -258,7 +260,6 @@ public class AdapterHoaDon extends ArrayAdapter<HoaDon> {
                         public void onClick(DialogInterface dialog, int which) {
                             item.setGiaXuat(Integer.parseInt(edGia.getEditText().getText().toString()));
                             item.setNgayXuat(edNgay.getEditText().getText().toString());
-                            item.setSoLuongXuat(Integer.parseInt(edSoLuong.getEditText().getText().toString()));
                             item.setTenMau(edMau.getText().toString());
                             item.size = edSize.getText().toString();
                             item.maSP = maSP;
