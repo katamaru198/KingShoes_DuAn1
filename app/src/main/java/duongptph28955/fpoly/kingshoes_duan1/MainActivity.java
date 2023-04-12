@@ -27,6 +27,7 @@ import duongptph28955.fpoly.kingshoes_duan1.fragment.fragmentMauSac;
 import duongptph28955.fpoly.kingshoes_duan1.fragment.fragmentSanPham;
 import duongptph28955.fpoly.kingshoes_duan1.fragment.fragmentSizeGiay;
 import duongptph28955.fpoly.kingshoes_duan1.fragment.fragment_HoaDon;
+import duongptph28955.fpoly.kingshoes_duan1.fragment.fragment_home;
 import duongptph28955.fpoly.kingshoes_duan1.fragment.themTaiKhoan_Fragment;
 
 public class MainActivity extends AppCompatActivity {
@@ -50,14 +51,18 @@ public class MainActivity extends AppCompatActivity {
         if (tenDangNhap.equalsIgnoreCase("admin")){
             nav.getMenu().findItem(R.id.action_themTaiKhoan).setVisible(true);
         }
-
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        Fragment fragment = new fragment_home();
+        fragmentManager.beginTransaction().replace(R.id.linerLayout,fragment).commit();
         nav.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             FragmentManager fragmentManager = getSupportFragmentManager();
             Fragment fragment;
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()){
-
+                    case R.id.action_home:
+                        fragment = new fragment_home();
+                        break;
                     case R.id.action_LoaiGiay:
                         fragment = new fragmentLoaiGiay();
                         break;
@@ -81,7 +86,6 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     case R.id.action_doanhThu:
                             fragment = new fragmentDoanhThu();
-
                         break;
                     case R.id.action_themTaiKhoan:
                         fragment = new themTaiKhoan_Fragment();
