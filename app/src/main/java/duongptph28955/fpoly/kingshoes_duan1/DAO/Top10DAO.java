@@ -25,4 +25,17 @@ public class Top10DAO {
         }
         return list;
     }
+
+    public ArrayList<SanPham> getHome(){
+        ArrayList<SanPham> list = new ArrayList<>();
+        SQLiteDatabase sqLiteDatabase = dbHelper.getReadableDatabase();
+        Cursor cursor = sqLiteDatabase.rawQuery("SELECT hd.maSanPham, sp.tenSanPham, COUNT(hd.maHoaDon), sp.hinhAnh FROM HOADON hd, SANPHAM sp WHERE hd.maSanPham = sp.maSanPham GROUP by hd.maSanPham, sp.tenSanPham HAVING COUNT(hd.maHoaDon) ORDER BY SUM(sp.soLuong) DESC LIMIT 9", null);
+        if (cursor.getCount()!=0){
+            cursor.moveToFirst();
+            do {
+                list.add(new SanPham(cursor.getInt(0), cursor.getString(1), cursor.getInt(2), cursor.getBlob(3)));
+            }while (cursor.moveToNext());
+        }
+        return list;
+    }
 }
