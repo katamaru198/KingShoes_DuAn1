@@ -16,6 +16,8 @@ import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -56,6 +58,7 @@ import duongptph28955.fpoly.kingshoes_duan1.DAO.MauSacDAO;
 import duongptph28955.fpoly.kingshoes_duan1.DAO.SanPhamDAO;
 import duongptph28955.fpoly.kingshoes_duan1.DAO.SizeGiayDAO;
 import duongptph28955.fpoly.kingshoes_duan1.R;
+import duongptph28955.fpoly.kingshoes_duan1.dto.HoaDon;
 import duongptph28955.fpoly.kingshoes_duan1.dto.LoaiGiay;
 import duongptph28955.fpoly.kingshoes_duan1.dto.MauSac;
 import duongptph28955.fpoly.kingshoes_duan1.dto.SanPham;
@@ -68,11 +71,14 @@ public class fragmentSanPham extends Fragment {
     final int REQUEST_CODE_FOLDER = 456;
     RecyclerView recyclerSanPham;
     SanPhamDAO sanPhamDAO;
-    TextInputLayout edtNgayNhapSP;
+    TextInputLayout edtNgayNhapSP, edtTimKiem;
     int masp;
     SizeGiayDAO sizeGiayDAO;
     MauSacDAO mauSacDAO;
     TextView txtSize, txtMau;
+    SanPhamAdapter adapter;
+
+
 
 
     @Nullable
@@ -81,6 +87,34 @@ public class fragmentSanPham extends Fragment {
         View view = inflater.inflate(R.layout.fragment_sanpham, container, false);
         recyclerSanPham = view.findViewById(R.id.recyclerSanPham);
         FloatingActionButton floatAdd = view.findViewById(R.id.floatAdd);
+
+        sanPhamDAO = new SanPhamDAO(getContext());
+        ArrayList<SanPham> list = sanPhamDAO.getDSSanPham();
+        edtTimKiem = view.findViewById(R.id.edtTimKiem);
+        edtTimKiem.getEditText().addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                List<SanPham> listSearch = new ArrayList<>();
+                listSearch.clear();
+                for (int i = 0; i < list.size(); i++) {
+                    if (list.get(i).getTenSP().contains(edtTimKiem.getEditText().getText()) && edtTimKiem.getEditText().getText().length() != 0){
+                        listSearch.add(list.get(i));
+                    }
+                }
+                adapter = new SanPhamAdapter(getContext(), (ArrayList<SanPham>) listSearch);
+                recyclerSanPham.setAdapter(adapter);
+            }
+        });
 
         sanPhamDAO = new SanPhamDAO(getContext());
         loadData();

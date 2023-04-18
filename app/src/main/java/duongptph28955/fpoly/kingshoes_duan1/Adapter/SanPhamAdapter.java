@@ -7,6 +7,8 @@ import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -16,20 +18,28 @@ import androidx.recyclerview.widget.RecyclerView;
 
 
 import java.util.ArrayList;
+import java.util.List;
 
 import duongptph28955.fpoly.kingshoes_duan1.DAO.SanPhamDAO;
 import duongptph28955.fpoly.kingshoes_duan1.R;
 
 import duongptph28955.fpoly.kingshoes_duan1.dto.SanPham;
 
-public class SanPhamAdapter extends RecyclerView.Adapter<SanPhamAdapter.ViewHolder>{
+public class SanPhamAdapter extends RecyclerView.Adapter<SanPhamAdapter.ViewHolder> implements Filterable {
     private Context context;
     ArrayList<SanPham> list;
+
     private SanPhamDAO sanPhamDAO;
+
+    ArrayList<SanPham> listNew;
 
 
     public ItemClickListener itemClickListener;
 
+    public SanPhamAdapter(Context context, ArrayList<SanPham> list) {
+        this.context = context;
+        this.list = list;
+    }
 
     public SanPhamAdapter(Context context, ArrayList<SanPham> list, SanPhamDAO sanPhamDAO, ItemClickListener itemClickListener) {
         this.context = context;
@@ -67,6 +77,38 @@ public class SanPhamAdapter extends RecyclerView.Adapter<SanPhamAdapter.ViewHold
     @Override
     public int getItemCount() {
         return list.size();
+    }
+
+    @Override
+    public Filter getFilter() {
+        return new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence charSequence) {
+                String strSearch = charSequence.toString();
+
+                if (strSearch.isEmpty()){
+                    listNew = list;
+                }else {
+                    List<SanPham> sanPhamList = new ArrayList<>();
+                    for (SanPham sanPham: list){
+                        if (sanPham.getTenSP().toLowerCase().contains(strSearch.toLowerCase())){
+                            sanPhamList.add(sanPham);
+                        }
+                    }
+                    listNew = (ArrayList<SanPham>) sanPhamList;
+                }
+                FilterResults filterResults = new FilterResults();
+                filterResults.values = listNew;
+
+                return filterResults;
+            }
+
+            @Override
+            protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
+                listNew = (ArrayList<SanPham>) filterResults.values;
+                notifyDataSetChanged();
+            }
+        };
     }
 
     public interface ItemClickListener{
