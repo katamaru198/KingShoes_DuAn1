@@ -125,6 +125,15 @@ public class AdapterHoaDon extends ArrayAdapter<HoaDon> {
                             dao.deleteHoaDon(item);
                             list.remove(item);
                             notifyDataSetChanged();
+                            ArrayList<SanPham> sanPhamArrayList = sanPhamDAO.getDSSanPham();
+                            for (int i = 0; i < sanPhamArrayList.size(); i++) {
+                                if (sanPhamArrayList.get(i).getMaSP() == item.getMaSP()){
+                                    int soluong = sanPhamArrayList.get(i).getSoLuong();
+                                    int soLuongDaTru = soluong + 1;
+                                    sanPhamArrayList.get(i).setSoLuong(soLuongDaTru);
+                                    sanPhamDAO.truSanPham(sanPhamArrayList.get(i));
+                                }
+                            }
                             dialog.dismiss();
                             Toast.makeText(context, "Xóa thành công", Toast.LENGTH_SHORT).show();
                         }
