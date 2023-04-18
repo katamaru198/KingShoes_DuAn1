@@ -16,16 +16,21 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 import duongptph28955.fpoly.kingshoes_duan1.DAO.DoanhThuDao;
 import duongptph28955.fpoly.kingshoes_duan1.R;
+import duongptph28955.fpoly.kingshoes_duan1.dto.HoaDon;
 
 public class fragmentDoanhThu extends Fragment {
     EditText ed_tuNgay ,ed_denNgay;
     Button btn_tuNgay,btn_denNgay,btn_thongKe;
     TextView tv_DoanhThu;
+    HoaDon item ;
+    ArrayList<HoaDon> list;
+    int TT;
     SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
     int mYear,mMonth ,mDay;
 
@@ -96,9 +101,21 @@ public class fragmentDoanhThu extends Fragment {
                 Toast.makeText(getActivity(),"không được để trống ngày",Toast.LENGTH_SHORT).show();
                 return;
             }
-            
-            DoanhThuDao doanhThuDao = new DoanhThuDao(getActivity());
-            tv_DoanhThu.setText("Doanh thu:" +doanhThuDao.getDoanhThu(tuNgay,denNgay)+"VND");
+
+
+        DoanhThuDao doanhThuDao = new DoanhThuDao(getActivity());
+
+        int doanhtthu =0;
+        list= (ArrayList<HoaDon>) doanhThuDao.GetHoaDonTheoNgay(tuNgay,denNgay);
+            for (int i = 0; i < list.size(); i++) {
+                if (list.get(i).getTrangThai()==1){
+
+                    doanhtthu+=list.get(i).getGiaXuat();
+
+                }
+            }
+             tv_DoanhThu.setText("Doanh thu: " +doanhtthu+" VND");
+
         }
     });
 
