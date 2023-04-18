@@ -137,6 +137,7 @@ public class SanPham {
         this.hinhAnh = hinhAnh;
     }
 
-
-
+    public SanPham(int soLuong) {
+        this.soLuong = soLuong;
+    }
 }

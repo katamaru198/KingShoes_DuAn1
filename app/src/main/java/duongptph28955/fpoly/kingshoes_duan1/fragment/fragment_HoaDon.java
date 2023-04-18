@@ -15,6 +15,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -50,7 +51,7 @@ public class fragment_HoaDon extends Fragment {
     HoaDon item;
     HoaDonDAO dao;
     FloatingActionButton fab;
-    TextInputLayout edGiaXuat, edNgayXuat, edSoLuongXuat;
+    TextInputLayout edGiaXuat, edNgayXuat;
     EditText edMau, edSize;
     Spinner spnSP, spnKH;
     CheckBox chkTrangThai;
@@ -114,11 +115,12 @@ public class fragment_HoaDon extends Fragment {
         edMau = view.findViewById(R.id.edMau);
         edSize = view.findViewById(R.id.edSize);
         edNgayXuat = view.findViewById(R.id.edNgayXuat);
-        edSoLuongXuat = view.findViewById(R.id.edSoLuongXuat);
         spnSP = view.findViewById(R.id.spnSanPham);
         spnKH = view.findViewById(R.id.spnKhachHang);
         sanPhamDAO = new SanPhamDAO(ct);
         listSP = sanPhamDAO.getDSSanPham();
+
+
 
         edNgayXuat.setEndIconOnClickListener(new View.OnClickListener() {
             @Override
@@ -133,7 +135,6 @@ public class fragment_HoaDon extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 maSP = listSP.get(position).getMaSP();
-
             }
 
             @Override
@@ -204,6 +205,7 @@ public class fragment_HoaDon extends Fragment {
                 builder2.show();
             }
         });
+
         khachHangDao = new KhachHangDao(ct);
         listKH = (ArrayList<KhachHang>) khachHangDao.getAll();
         adapterSpinnerKH = new AdapterSpinnerKH(ct, listKH);
@@ -243,6 +245,15 @@ public class fragment_HoaDon extends Fragment {
                 } else {
                     if (dao.insertHoaDon(item)>0){
                         Toast.makeText(ct, "Thêm thành công", Toast.LENGTH_SHORT).show();
+                        ArrayList<SanPham> sanPhamArrayList = sanPhamDAO.getDSSanPham();
+                        for (int i = 0; i < sanPhamArrayList.size(); i++) {
+                            if (sanPhamArrayList.get(i).getMaSP() == item.getMaSP()){
+                                int soluong = sanPhamArrayList.get(i).getSoLuong();
+                                int soLuongDaTru = soluong - 1;
+                                sanPhamArrayList.get(i).setSoLuong(soLuongDaTru);
+                                sanPhamDAO.truSanPham(sanPhamArrayList.get(i));
+                            }
+                        }
                         capNhatLV();
                         dialog.dismiss();
                     } else {
