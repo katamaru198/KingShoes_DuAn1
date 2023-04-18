@@ -1,7 +1,6 @@
 package duongptph28955.fpoly.kingshoes_duan1.DAO;
 
 import android.annotation.SuppressLint;
-import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -11,7 +10,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import duongptph28955.fpoly.kingshoes_duan1.DBHelper.DBHelper;
-import duongptph28955.fpoly.kingshoes_duan1.dto.MauSac;
 import duongptph28955.fpoly.kingshoes_duan1.dto.SanPham;
 
 public class SanPhamDAO {
@@ -114,5 +112,12 @@ public class SanPhamDAO {
         if (check == -1)
             return 0;
         return 1;
+    }
+
+    public int truSanPham(SanPham obj){
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("soLuong",obj.getSoLuong());
+        return db.update("SANPHAM",values,"maSanPham=?",new String[]{String.valueOf(obj.maSP)});
     }
 }

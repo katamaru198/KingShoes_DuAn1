@@ -276,7 +276,7 @@ public class fragmentSanPham extends Fragment {
         if (requestCode == REQUEST_CODE_FOLDER && resultCode == RESULT_OK && data != null) {
             Uri uri = data.getData();
             try {
-                InputStream inputStream = getContentResolver().openInputStream(uri);
+                InputStream inputStream = getActivity().getContentResolver().openInputStream(uri);
                 Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
                 imgHinh.setImageBitmap(bitmap);
             } catch (FileNotFoundException e) {
@@ -284,10 +284,6 @@ public class fragmentSanPham extends Fragment {
             }
         }
         super.onActivityResult(requestCode, resultCode, data);
-    }
-
-    public ContentResolver getContentResolver() {
-        throw new RuntimeException("Stub!");
     }
 
     private ArrayList<HashMap<String, Object>> getDSLoaiSach() {
@@ -371,7 +367,7 @@ public class fragmentSanPham extends Fragment {
         imgEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showDialogEdit();
+                showDialogEdit(sanPham);
                 alertDialog.dismiss();
             }
         });
@@ -408,7 +404,7 @@ public class fragmentSanPham extends Fragment {
 
     }
 
-    private void showDialogEdit() {
+    private void showDialogEdit(SanPham sanPham) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         LayoutInflater inflater = getLayoutInflater();
         View view = inflater.inflate(R.layout.dialog_editsanpham, null);
@@ -442,14 +438,14 @@ public class fragmentSanPham extends Fragment {
         ibtnFolder = view.findViewById(R.id.ibtnFolder);
         imgHinh = view.findViewById(R.id.imgHinh);
 
-//        txtMaSP.setText("Mã sản phẩm: "+sanPham.getMaSP());
-//        byte[] hinhAnh = sanPham.getHinhAnh();
-//        Bitmap bitmap = BitmapFactory.decodeByteArray(hinhAnh, 0 , hinhAnh.length);
-//        imgHinh.setImageBitmap(bitmap);
-//        edtTenSP.getEditText().setText(sanPham.getTenSP());
-//        edtGiaNhapSP.getEditText().setText(sanPham.getGiaNhap());
-//        edtSoLuongSP.getEditText().setText(sanPham.getSoLuong());
-//        edtNgayNhapSP.getEditText().setText(sanPham.getNgayNhap());
+        txtMaSP.setText("Mã sản phẩm: "+sanPham.getMaSP());
+        byte[] hinhAnh = sanPham.getHinhAnh();
+        Bitmap bitmap = BitmapFactory.decodeByteArray(hinhAnh, 0 , hinhAnh.length);
+        imgHinh.setImageBitmap(bitmap);
+        edtTenSP.getEditText().setText(sanPham.getTenSP());
+        edtGiaNhapSP.getEditText().setText(String.valueOf(sanPham.getGiaNhap()));
+        edtSoLuongSP.getEditText().setText(String.valueOf(sanPham.getSoLuong()));
+        edtNgayNhapSP.getEditText().setText(sanPham.getNgayNhap());
 
         ibtnCamera.setOnClickListener(new View.OnClickListener() {
             @Override
