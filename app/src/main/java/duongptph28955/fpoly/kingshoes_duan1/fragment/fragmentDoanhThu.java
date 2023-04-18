@@ -117,6 +117,7 @@ public class fragmentDoanhThu extends Fragment {
              tv_DoanhThu.setText("Doanh thu: " +doanhtthu+" VND");
 
         }
+
     });
 
 
