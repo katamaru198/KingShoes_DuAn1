@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import duongptph28955.fpoly.kingshoes_duan1.DBHelper.DBHelper;
+import duongptph28955.fpoly.kingshoes_duan1.dto.DoanhThu;
 import duongptph28955.fpoly.kingshoes_duan1.dto.HoaDon;
 
 public class DoanhThuDao {
@@ -57,6 +58,24 @@ public class DoanhThuDao {
         }
 
         return list.get(0);
+    }
+
+    @SuppressLint("Range")
+    public List<DoanhThu> getBieuDo(){
+        String sqlDoanhThu = "SELECT strftime('%m', ngayXuat) AS thang, sum(giaXuat) as doanhThu FROM HOADON GROUP BY strftime('%m', ngayXuat)";
+        List<DoanhThu> list = new ArrayList<>();
+        Cursor c = db.rawQuery(sqlDoanhThu, null);
+        while (c.moveToNext()){
+            try {
+                DoanhThu doanhThu = new DoanhThu();
+                doanhThu.setThang(Integer.parseInt(c.getString(c.getColumnIndex("thang"))));
+                doanhThu.setTongTien(Integer.parseInt(c.getString(c.getColumnIndex("doanhThu"))));
+                list.add(doanhThu);
+            } catch (NumberFormatException e){
+                list.add(new DoanhThu(0,0));
+            }
+        }
+        return list;
     }
 
 }

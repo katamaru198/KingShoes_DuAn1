@@ -1,7 +1,9 @@
 package duongptph28955.fpoly.kingshoes_duan1.fragment;
 
 import android.app.DatePickerDialog;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,13 +17,22 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.LineData;
+import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.List;
 
 import duongptph28955.fpoly.kingshoes_duan1.DAO.DoanhThuDao;
 import duongptph28955.fpoly.kingshoes_duan1.R;
+import duongptph28955.fpoly.kingshoes_duan1.dto.DoanhThu;
 import duongptph28955.fpoly.kingshoes_duan1.dto.HoaDon;
 
 public class fragmentDoanhThu extends Fragment {
@@ -33,6 +44,9 @@ public class fragmentDoanhThu extends Fragment {
     int TT;
     SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
     int mYear,mMonth ,mDay;
+
+    LineChart lineChart;
+    ArrayList<DoanhThu> doanhThuArrayList;
 
     @Nullable
     @Override
@@ -119,30 +133,39 @@ public class fragmentDoanhThu extends Fragment {
         }
 
     });
+        lineChart = view.findViewById(R.id.lineChart);
+        LineDataSet lineDataSet = new LineDataSet(dataValues(), "Doanh thu");
+        ArrayList<ILineDataSet> dataSets = new ArrayList<>();
+        dataSets.add(lineDataSet);
+        LineData data = new LineData(lineDataSet);
+        lineChart.setData(data);
 
+        lineChart.getAxisRight().setEnabled(false);
+        lineChart.getXAxis().setPosition(XAxis.XAxisPosition.BOTTOM);
+        lineChart.getXAxis().setGranularity(1.0f);
 
+        lineDataSet.setColor(Color.RED);
+        lineDataSet.setValueTextColor(Color.BLACK);
+        lineDataSet.setValueTextSize(18f);
+
+        lineChart.invalidate();
         return view;
     }
-//    DatePickerDialog.OnDateSetListener mDateTuNgay =(new DatePickerDialog.OnDateSetListener() {
-//        @Override
-//        public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-//            mYear = year;
-//            mMonth = month;
-//            mDay = dayOfMonth;
-//            GregorianCalendar c = new GregorianCalendar(mYear,mMonth,mDay);
-//            ed_tuNgay.setText(sdf.format(c.getTime()));
-//        }
-//    });
-//    DatePickerDialog.OnDateSetListener mDateDenNgay = (new DatePickerDialog.OnDateSetListener() {
-//        @Override
-//        public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-//            mYear= year;
-//            mMonth = month;
-//            mDay = dayOfMonth;
-//
-//            GregorianCalendar c = new GregorianCalendar(mYear,mMonth,mDay);
-//            ed_denNgay.setText(sdf.format(c.getTime()));
-//
-//        }
-//    });
+
+    private List<Entry> dataValues(){
+        DoanhThuDao doanhThuDao = new DoanhThuDao(getContext());
+        doanhThuArrayList = (ArrayList<DoanhThu>) doanhThuDao.getBieuDo();
+
+        List<Entry> dataValue = new ArrayList<>();
+        dataValue.add(new Entry(0,0));
+
+        for (int i = 0; i < doanhThuArrayList.size(); i++) {
+            int thang = doanhThuArrayList.get(i).getThang();
+            int tongTien = doanhThuArrayList.get(i).getTongTien();
+            dataValue.add(new Entry(doanhThuArrayList.get(i).getThang(), doanhThuArrayList.get(i).getTongTien()));
+            Log.d("zzzzz", "dataValues: " + thang + " tổng: " + tongTien);
+
+        }
+        return dataValue;
+    }
 }
